@@ -394,17 +394,50 @@ public class ForExam {
 	Scanner scan = new Scanner(System.in);
 	int a1 = scan.nextInt();
 	
-	for (int a3 = 1; a3 <= a1; a3++) {
-		for (int a2 = a1 -1; a2 >= 1; a2 --)
-		{System.out.print("_");
-			for (int b = 1; b <= (2*a3)-1; b++)
-			{System.out.print("+");}
-		for (int a2 = a1 -1; a2 >= 1; a2 --)
-		{System.out.print("_");}
-		System.out.println("  ");	
-		}
-	}
+//	for (int a3 = 1; a3 <= a1; a3++) {
+//		for (int a2 = a1 -a3; a2 >= 1; a2 --)
+//		{System.out.print("_");}
+//		for (int b = 1; b <= (2*a3)-1; b++)
+//		{System.out.print("+");}
+//		for (int a2 = a1 -a3; a2 >= 1; a2 --)
+//		{System.out.print("_");}
+//		System.out.println("  ");	
+//		}
 		
+		
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 	
 	
