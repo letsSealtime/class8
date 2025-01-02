@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+    
+    #bi{
+        height:400px;
+        border : 1px solid red;
+        background-image: url(https://imgcdn.sigstick.com/Q8Sm2N9YwUkl5k0JM46U/cover.thumb256.png), url(https://static.vecteezy.com/system/resources/previews/034/971/541/non_2x/gouache-illustration-pastel-abstract-confetti-minimal-cute-style-doodle-wallpaper-free-png.png);
+        background-repeat : no-repeat, repeat; /* repeat-x; */
+        /* background-size: 50px 80px; */
+        /* background-size: 100% 100%; */
+        /* background-size: cover; */
+        background-size: contain;
+        background-position: left;
+        /* background-color:royalblue; */
+    }
+    
+#div{
+    height: 100vh;
+    background-image: url(https://static.vecteezy.com/system/resources/previews/034/971/541/non_2x/gouache-illustration-pastel-abstract-confetti-minimal-cute-style-doodle-wallpaper-free-png.png);
+    background-size: contain;
+    overflow: auto; /* 요소가 너무 크면 스크롤로 어떻게 보여줄지 결정*/
+    background-attachment: fixed;
+
+    /*  background : color || image || repeat || attachment || porsition */
+}
+#div p{
+    height: 200vh;
+}
+
+    </style>
+</head>
+<body>
+    <p id="bi">
+        background image <br>
+        background image <br>
+        background image <br>
+    </p>
+
+    <div id="div">
+        <p>어떤 글자</p>
+    </div>
+    
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+
+        body{
+            background-image: url(https://html5up.net/uploads/demos/tessellate/images/header.jpg);
+            background-repeat: no-repeat;
+            background-size:contain;
+            height:100vh;
+        }
+        .welcome{
+            display:inline-block;
+            list-style:none;
+            color:white;
+            width : 50%;
+            margin:200px;
+            text-align:center;
+            line-height:1rem;
+            padding:10px;
+        }
+
+        /* 마진 중첩 해결법 1*/
+        /* border:1px solid white;*/
+        /* 마진 중첩 해결법 2*/
+        /* margin:200px */
+        /* padding top:-1px; */
+        /* 마진 중첩 해결법 3*/
+        안 보이는 컨텐츠 만들기
+
+
+        .msg1{
+            font-size:40px;
+        }
+
+        .msg2{
+            font-size:20px;
+        }
+
+        .msg3{
+            font-size:15px;
+            display:inline-block;
+
+            border-color: white;
+            background-color: rgba(255,255,255,0.3);
+        }
+
+    </style>
+</head>
+<body>
+    
+    <ul class="welcome">
+        <li class="msg1">Welcome to Tessellate</li>
+        <li class="msg2"> A free responsive site template by HTML5 UP</li>
+        <li class="msg3">Proceed to second phase</li>
+    </ul>
+
+</body>
+</html>

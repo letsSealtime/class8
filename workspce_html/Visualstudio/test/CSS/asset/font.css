@@ -1,0 +1,101 @@
+/* 아래 폰트 패밀리에 적힌 값을 사용 가능*/
+@font-face {
+font-family: 'Ownglyph_ryurue-Rg';
+src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2405-2@1.0/Ownglyph_ryurue-Rg.woff2') format('woff2');
+font-weight: normal;
+font-style: normal;
+}
+
+#p1{
+    color:red;
+    text-decoration: overline;
+    font-family: 'Ownglyph_ryurue-Rg';
+}
+
+input[type=checkbox]:checked + span{
+    text-decoration : line-through;
+    color:gray;
+}
+
+.size{
+    /* font-size: 32px; */
+    /* font-size: 2em; 폰트에선 em을 많이 쓴다.*/
+    font-size:small;
+}
+
+.style{
+    font-style:italic;
+}
+
+em{
+    font-style:normal;
+}
+
+.fw-100{
+    font-weight:100;
+}
+.fw-500{
+    font-weight:500;
+}
+.fw-900{
+    font-weight:900;
+}
+/* 폰트는 100~900. 범위 넘어가면 의미 X */
+.fw-2000{
+    font-weight:2000;
+}
+
+.fw-bod {
+    font-weight:bold;
+}
+
+.align-right{
+    text-align: right;
+}
+
+.align-center{
+    text-align: center;
+}
+
+.align-justify{
+    text-align: jutify;
+}
+
+.spacing {
+    letter-spacing: -0.1em;
+}
+
+.lh{
+    line-height:200%;
+}
+
+.middle{
+    border: 1px solid red;
+    height : 100px;
+    line-height: 100px;
+    /* 세로방향 가운데 정렬 */
+    text-align:center;
+}
+
+.nowrap{
+    border: 1px solid red;
+    width:50vw;
+    white-space:nowrap;
+    overflow: hidden;
+    text-overflow:ellipsis;
+    /* 말줄임표 */
+}
+
+.text{
+    border: 1px solid red; 
+    width: 50vw;
+}
+
+.word-wrap{
+    word-wrap:break-word;
+}
+
+.word-break{
+    word-break:break-all;
+    /* 원래 엔터까지 무시한다. */
+}

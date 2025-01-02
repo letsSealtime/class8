@@ -1,0 +1,140 @@
+div {
+border:1px solid red;
+}
+
+.parent {
+    width:100px;
+    margin:20px;
+    background-color: pink;
+    color:white;
+}
+
+.child{
+    background-color:rgba(0,0,255,0.5);
+    width:90px;
+}
+
+.relative{
+
+    /* 원래 위치를 기준으로 이동(top, right, bottom, left) */
+    /* 원래의 내 공간은 남아있다. */
+
+
+    position:relative;
+    top:0;
+    left:0;
+    /* 퍼센트도 가능하나, 픽셀을 주로 사용.
+    퍼센트 시 기준은 내 원위치. */
+}
+
+.absolute{
+    position:absolute;
+    /* 레이어 층이 하나 생김 */
+    /* top:0;
+    left:0; */
+
+    /* top:50%;
+    left:50% */
+
+    top:250px;
+    left:150px;
+}
+
+.absolute-bottom{
+    position:absolute;
+    right:10px;
+    bottom:10px;
+    /* 뷰포트 기준이라 (스크롤 관계x)
+    계산이 어려워 잘 안 쓴다. */
+}
+
+.fixed{
+    width:60px;
+    height:60px;
+    position:fixed;
+    line-height:60px;
+    text-align:center;
+    right:5px;
+    bottom:5px;
+}
+
+.sticky{
+    position:sticky;
+    top:20px;
+}
+
+.z1{
+    background-color: hotpink;
+    top:20px;
+    left:20px;
+
+    /* z-index:1; */
+}
+
+.z2{
+    background-color: rgb(126, 240, 143,0.5);
+    top:-10px;
+    left:-20px;
+
+    /* z-index:2; */
+}
+
+.z3{
+    background-color: rgb(126, 102, 212,0.5);
+    top:-20px;
+    left:50px;
+
+    /* z-index:9999; */
+}
+
+.relative:hover{
+    z-index:9999;
+}
+
+.main{
+    background-color: darksalmon;
+    width:200px;
+    height:30px;
+    text-align:center;
+    line-height:30px;
+}
+
+.sub{
+    position:relative;
+}
+
+ul.main{
+    background-color: yellow;
+}
+
+ul.main:hover ul.sub{
+display:block;
+}
+
+ul.main ul.sub{
+    background-color:aqua;
+    position:absoulute;
+    top:-5px;
+    display:none;
+}
+
+ul.main ul.sub li:hover{
+    background-color: pink;
+}
+
+.p1{
+    position:relative;
+    width:200px;
+    height:150px;
+    /* 반 75 */
+}
+
+.p1 .c1{
+    position:absolute;
+    /* top:50%; */
+    top:calc(150px/2 - 50px/2);
+    left:calc(50% - 70px/2);
+    width:70px;
+    height:50px;
+
+}

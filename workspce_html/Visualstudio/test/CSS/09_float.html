@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+
+        .article{
+            border:1px solid red;
+        }
+
+        .box{
+            border:1px solid red;
+            width:100px;
+            height:100px;
+            margin:10px;
+        }
+
+        .box.left{
+            border:1px solid blue;
+            float:left;
+        }
+
+        .box.right{
+            border:1px solid yellowgreen;
+            float:right;
+        }
+
+        .clearfix:after{
+            content: "";
+            display:block;
+            clear:both;
+        }
+        /*여기 있는 애가 됐다. 고정*/
+
+
+        .homepage{
+            border:1px solid rgb(101, 228, 177);
+            margin:10px;
+            text-align: center;
+        }
+
+        .homepage .menu{
+            border:1px solid blue;
+            width:200px;
+            float:left;
+        }
+        .homepage .mypage{
+            border:1px solid rgb(114, 54, 129);
+            width:200px;
+            float:right;
+        }
+        .homepage .logo{
+            border:1px solid rgb(12, 161, 52);
+            display: inline-block;
+        }
+
+
+    </style>
+</head>
+<body>
+
+    <div class="article">
+        <img class="box left" src="https://image.utoimage.com/preview/cp872722/2022/12/202212008462_500.jpg"> Lorem ipsum dolor, sit amet consectetur adipisicing elit. Animi suscipit perferendis laudantium repellat itaque voluptatum quas atque adipisci similique. Ut dolorem ullam maiores voluptate nemo accusantium deserunt quas, impedit inventore.
+    </div>
+
+    <div class="clearfix">                                                                                                                                                                                   
+        <div class="box left">1</div>
+        <div class="box left">2</div>
+        <div class="box right">3</div>
+        <div class="box right">4</div>
+    </div>
+
+    <div>글씨 몇개</div>
+
+    <div>                                                                                                                                                                                   
+        <div class="box left">1</div>
+        <div class="box left">2</div>
+        <div class="box right">3</div>
+        <div class="box right">4</div>
+        <div style="clear:both"></div>
+        <!-- 부모와 관계 없이 clear:both로 막아줘야 한다.
+        그 뒤에 있는 글씨가 영향을 받기 때문. -->
+        <!-- 하지만 깔끔하게, 부모로 감싸고 css after로 막자 -->
+    </div>
+
+    <div>글씨 몇개</div>
+
+    <div class="homepage">
+        <div class="menu">왼쪽 메뉴</div>
+        <div class="logo">가운데 로고</div>
+        <div class="mypage">오른쪽 마이페이지 </div>
+    </div>
+
+</body>
+</html>

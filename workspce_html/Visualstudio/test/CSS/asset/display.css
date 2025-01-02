@@ -1,0 +1,37 @@
+.block{
+    border: 1px solid red;
+    width:100px;
+    margin : 0 auto;
+    /* 좌우만 가능 */
+}
+
+.inline{
+    border:1px solid red;
+    height : 50px;
+    width:100px;
+
+    margin: 0 50px;
+    padding : 30px;
+}
+/* 좌우만 되고 위 아래 안 됨 */
+
+.bg_blue{
+    background-color:blue;
+    color:#ffffff;
+}
+
+.parent{
+    border: 1px dotted rgb(255,0,255);
+    width: 304px;
+}
+
+.parent > div {
+    border : 1px dashed blue;
+    height : 50px;
+    width : 150px;
+    box-sizing:border-box;
+
+    display : inline-block;
+    vertical-align:top;
+    border-radius: 30px;
+}

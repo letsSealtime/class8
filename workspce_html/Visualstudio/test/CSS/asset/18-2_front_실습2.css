@@ -1,0 +1,60 @@
+body{
+    margin:0px;
+}
+
+.top{
+    background-color: rgb(152, 227, 77);
+    height:50px;
+}
+
+.top_menu{
+    background-color: darkkhaki;
+    height:130px;
+}
+
+.home_menu{
+    background-color: rgb(152, 227, 77);
+    height:60px;
+}
+
+.content1{
+    background-color: rgb(127, 153, 255);
+    margin:0;
+    padding:0;
+    font-size:0;
+    border:1px solid red;
+    box-sizing:border-box;
+}
+
+.left_menu{
+    background-color: coral;
+    width:20vw;
+    height:45vh;
+    display: inline-block;
+    vertical-align: top;
+}
+
+.main{
+    background-color: darkgoldenrod;
+    width:78vw;
+    height:45vh;
+    display: inline-block;
+    vertical-align: top;
+    
+}
+
+.cleaning{
+    height:15vh;
+    width:100vw;
+    display:block;
+    background-color: blueviolet;
+
+}
+
+.product_box1{
+    background-color: chocolate;
+    height:30vh;
+    width:78vw;
+    position:relative;
+    right:0;
+}

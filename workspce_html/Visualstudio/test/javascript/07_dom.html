@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        .red{color:red};
+
+
+    </style>
+</head>
+<body>
+    <h1 id="title">DOM 연습</h1>
+
+    <div id="view">첫번째 #view</div>
+    <div id="view">두번째 #view</div>
+
+    <div class="div2">첫번째 .div</div>
+    <div class="div2">두번째 .div</div>
+
+    <!-- #parent .div2 -->
+    <div id="parent">
+        <div class="child div2" title="안쪽">안쪽 div</div>
+        <div class="child">안쪽 div</div>
+    </div>
+    
+    <img src ="https://png.pngtree.com/thumb_back/fh260/background/20230613/pngtree-small-white-rabbit-in-the-grass-image_2915502.jpg">
+
+    <script>
+        // document는 html 문서 전체를 뜻함
+        // getElementById : 속성 id의 값을 이용해 dom을 가져온다
+        let title = document.getElementById("title");
+        console.log(title);
+        console.log(""+title);
+        // alert(title)
+
+        // 요소가 없는 경우 null
+        let test = document.getElementById("test");
+        console.log(test);
+
+        // id가 여러개인 경우 첫번째 DOM 하나만 가져온다
+        let view = document.getElementById("view");
+        console.log(view);
+
+
+        // tag명으로 DOM 찾기
+        // 일치하는 모든 것을 배열로 돌려준다
+        let divs = document.getElementsByTagName("div");
+        console.log(divs);
+
+        // 하나만 있어도 한개짜리 배열이 나온다
+        let h1 = document.getElementsByTagName("h1");
+        console.log(h1);
+
+        // 없어도 null이 아닌 비어있는 배열(length == 0)
+        let human = document.getElementsByTagName("human");
+        console.log(human);
+
+
+        let div2 = document.getElementsByClassName("div2")
+        console.log(div2);
+        console.log(div2[0]);
+
+
+        // document : 문서 전체
+        let parent = document.getElementById("parent");
+        console.log(parent)
+        // 특정 DOM 안에서 찾기
+        let child_div2 = parent.getElementsByClassName("div2");
+        // let child_div2 = document.getElementById("parent").getElementsByClassName("div2");
+        console.log(child_div2[0])
+
+
+
+        // querySelector : CSS 선택자를 사용할 수 있음
+        let qs1 = document.querySelector("#parent .div2");
+        console.log(qs1)
+
+        // getElemntById 처럼 맨 처음 나오는 하나의 DOM만 돌려준다.
+        let qs2 = document.querySelector(".div2");
+        console.log(qs2)
+
+        // 요소가 없는 경우 null이 나온다.
+        let qs3 = document.querySelector("#human");
+        console.log(qs3)
+
+        let qsa1 = document.querySelectorAll(".div2");
+        console.log(qsa1);
+
+        let qsa2 = document.querySelectorAll(".div2asdfd");
+        console.log(qsa2);
+
+        let child1 = document.querySelector("#parent .div2");
+        console.log(child1);
+
+        let parent1 = child1.parentNode;
+        console.log(parent1);
+        //주로 쓰이긴 한다. 형제나 자식 요소도 가능하긴 한데... 위험
+        // parentNode : 부모 DOM으로 이동
+
+        // classList : class 를 배열 형식으로 돌려준다.
+        // classList.add() : class 추가
+        console.log(child1.classList)
+        child1.classList.add("red");
+        // 클래스는 중복해서 추가되지 않는다.
+        child1.classList.add("red");
+
+        child1.classList.remove("red");
+        child1.classList.remove("red2")
+        // 해당 클래스 삭제
+
+        child1.classList.toggle("red");
+        child1.classList.toggle("red");
+        // toggle : 없으면 remove, 있으면 add.
+
+        let isRed = child1.classList.contains("red");
+        console.log(isRed);
+
+        // 토글 구현 (토글 쓰지 않고...)
+        // red class가 있으면 삭제
+        // red class가 있으면 red 추가
+
+        if (isRed == true){
+            child1.classList.remove("red");
+        } else {
+            child1.classList.add("red");
+        };
+
+        console.log(child1.className);
+        child1.className = "blue";
+        // className : 모든 class를 문자로 돌려줌.
+        // 값을 지정하는 경우, class의 값을 덮어쓰기.
+
+        // css 선택자 중에 속성으로 선택하는 걸로 querySelector 사용해 보기
+        document.querySelector("[id=title]");
+        
+        // contains 구현해보기
+        function contains(element, name){
+            for(let i=0; i<element.classList.length; i++){
+                if(element.classList[i] == name){
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        let img = document.getElementsByTagName("img");
+        console.log(img);
+        console.log(img[0]);
+        console.log(img[0].classList);
+
+        let isSrc = img[0].hasAttribute("src");
+        console.log(isSrc);
+        isSrc = img[0].hasAttribute("readonly");
+        console.log(isSrc);
+
+        // 없으면 null
+        src = img[0].getAttribute("src");
+        console.log(src);
+
+        //setAttribute (속성명, 속성값) : 속성명과 속성값이 같이 다녀야
+        // 속성이 없으면 속성을 만들고 속성이 있으면 값을 덮어쓴다.
+        img[0].setAttribute("data-human", "1강의실");
+
+        img[0].removeAttribute("data-human");
+
+        
+
+    </script>
+</body>
+</html>
