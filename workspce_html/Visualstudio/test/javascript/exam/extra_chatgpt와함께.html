@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+
+
+
+<h1 id="hello">안녕하세요!</h1>
+<p id="thisIs">이건 연습 문제입니다.</p>
+<p>재미있게 배워봐요!</p>
+
+<h1>두번째문제</h1>
+<div class="box">첫 번째 박스</div>
+<div class="box">두 번째 박스</div>
+
+<h1>세번째문제</h1>
+<button id="myButton">클릭하세요</button>
+
+<h1>네번째문제</h1>
+<input type="radio" name="size" value="small">
+<input type="radio" name="size" value="medium" checked>
+<input type="radio" name="size" value="large">
+
+<h1>다섯번째문제</h1>
+<ul>
+    <li class="fruit">사과</li>
+    <li class="fruit">바나나</li>
+    <li class="vegetable">당근</li>
+</ul>
+
+<script>
+
+    const hello = document.querySelector('#hello')
+    hello.innerText = "배운다! JavaScript!";
+
+    const thisIs = document.querySelector('#thisIs')
+    thisIs.innerText = "이건 정말 재밌어!";
+
+    const box = document.querySelector('.box');
+    box.style.backgroundColor='blue';
+    const boxes = document.querySelectorAll('.box');
+    const secondBox = boxes[1];
+    secondBox.innerText = "나는 두번째 박스야!";
+
+    const myButton = document.querySelector('#myButton');
+    if (myButton){
+        myButton.innerText="눌렀어!";
+    } else {
+        console.log("버튼이 없습니다!")
+    }
+
+    const sizeChecked = document.querySelector('[name="size"]:checked');
+    if (sizeChecked){
+        console.log(sizeChecked.value);
+    } else {
+        console.log('체크된 라디오 버튼이 없긔윤');
+    }
+
+    const fruit =document.querySelector('.fruit');
+    fruit.innerText = "수박";
+    const vegetable = document.querySelector('.vegetable')
+    vegetable.innerText = "브로콜리";
+
+
+    
+    
+    </script>
+
+
+</body>
+</html>

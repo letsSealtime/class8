@@ -28,6 +28,10 @@
     
     <img src ="https://png.pngtree.com/thumb_back/fh260/background/20230613/pngtree-small-white-rabbit-in-the-grass-image_2915502.jpg">
 
+
+    <div id="del">지워짐</div>
+
+
     <script>
         // document는 html 문서 전체를 뜻함
         // getElementById : 속성 id의 값을 이용해 dom을 가져온다
@@ -167,6 +171,9 @@
         img[0].removeAttribute("data-human");
 
         
+        let b= document.querySelector('#del');
+        let a= document.querySelector('#del').remove();
+        console.log('a', a) // undefined 돌려주는 것이 아무것도 없다.
 
     </script>
 </body>

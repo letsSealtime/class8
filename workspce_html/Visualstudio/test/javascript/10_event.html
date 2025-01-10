@@ -4,38 +4,53 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+ 
     <style>
-        body{
-            height:2000px;
+        body {
+            height: 2000px;
+        }
+        #console {
+            position: sticky;
+            top: 0;
         }
 
-        #console{
-            position : sticky;
-            top:0;
+        #cursor {
+            width: 50px;
+            height: 50px;
+
+            position: absolute;
+            top : 10px;
+            left : 0px;
         }
     </style>
     <script>
-
         window.addEventListener("load", init);
 
-        function init(){
-            const bt1 = document.querySelector("#btn1");
-            console.log('btn1 : ',btn1);
+        // window.onload = function(){
+        //     init();
+        // }
 
-            //onclick : 변수이므로 마지막 값만 저장된다.
-            btn2.onclick=function(){
-                document.querySelector("#console").innerHTML += "<br>버튼 2 클릭";
+        function init(){
+            const btn2 = document.querySelector("#btn2");
+            console.log('btn2 :', btn2);
+            
+            btn2.onclick = function(){
+                document.querySelector("#console").innerHTML += "<br>버튼2 클릭";
+            }
+            // btn2.onclick = ''
+            // onclick : 변수이므로 마지막 값만 저장된다
+            btn2.onclick = function(){
+                document.querySelector("#console").innerHTML += "<br>버튼2-1 클릭";
             }
 
-            const btn3 = document.querySelector("#btn3"); 
+            const btn3 = document.querySelector("#btn3");
             btn3.addEventListener("click", function(){
-                document.querySelector("#console").innerHTML += "<br>버튼 3 클릭";
-
+                 document.querySelector("#console").innerHTML += "<br>버튼3 클릭"
+                 document.documentElement.scrollTop = 1000;
             })
-            
+            // addEventListener : 함수를 추가하는 것이므로 두개 이상 bind 할 수 있다
             btn3.addEventListener("click", function(){
-                document.querySelector("#console").innerHTML += "<br>버튼 3-1 클릭";
-
+                 document.querySelector("#console").innerHTML += "<br>버튼3-1 클릭"
             })
 
             const btn4 = document.querySelector("#btn4");
@@ -43,47 +58,332 @@
             btn4.addEventListener("click", btn4click);
             // removeEventListener : 해당 이벤트 콜백 제거
             // 단, 익명함수는 불가능
+            // 마치 함수마다 고유한 id같은게 있는데
+            // 익명함수는 선언될때마다 VM이라는 공간에
+            // 신규 id를 발급받기 때문에 지울때 사용하지 못함
             btn4.removeEventListener("click", btn4click);
 
-            window.addEventListener("scroll",function(){
+            window.addEventListener("scroll", function(){
                 const scrollTop = 
-                document.documentElement.scrollTop;
+                        document.documentElement.scrollTop;
                 document.querySelector("#console").innerHTML = scrollTop;
             })
 
-            loginbtn.addEventListener("click", loginClick);
+            document.querySelector("#login")
+                    .addEventListener("click", function(){
+                const id = document.querySelector("#id").value
+                const pw = document.querySelector("#pw").value
+
+                // if( id == '' ){
+                // if( id.trim() == '' ){
+                if( id.trim().length == 0 ){
+                    document.querySelector("#console").innerHTML = '아이디는 필수입니다'
+                } else {
+                    document.querySelector("#console").innerHTML = id +","+ pw
+                }
+            })
+
+            const id = document.querySelector("#id");
+            // id.addEventListener('keydown', function(){
+            //     console.log('keydown')
+            // })
+            id.addEventListener('keyup', function(event){
+                console.log(event.keyCode)
+                if( event.keyCode == 13 ){
+                    document.querySelector("#pw").focus();
+                }
+            })
+
+            document.querySelector("#pw")
+                .addEventListener("keyup", function(event){
+                    if( event.keyCode == 13 ){
+                        document.querySelector("#login").click();
+                    }
+                })
+
+            document.querySelector("#area")
+                .addEventListener("mouseover", function(){
+                    console.log("마우스 들어옴")
+                })
+            document.querySelector("#area")
+                .addEventListener("mouseout", function(){
+                    console.log("마우스 나감")
+                })
+            
+            // 앞에 아무것도 안쓰면 브라우저 전체에 적용되는 이벤트
+            addEventListener('mousemove', function(event){
+                // console.log("마우스 움직임")
+                // console.log("pageX :", event.pageX, "pageY :", event.pageY)
+                const cursor = document.querySelector("#cursor");
+                cursor.style.top = event.pageY+20 + "px";
+                cursor.style.left = event.pageX+20 + "px";
+
+                // pageX/Y : 스크롤에 관계 없이 문서 좌상단 기준
+                // clientX/Y : 지금 보이는 화면 좌상단 기준
+                // offsetX/Y : 대상 기준으로 좌상단 기준
+
+
+            })
+
+            id.addEventListener('focus', function(){
+                id.style.background = 'yellow';
+            })
+
+            id.addEventListener('blur', function(){
+                id.style.background = '';
+            })
+
+            document.querySelector("#form")
+                .addEventListener('submit', function(event){
+                    
+                    // 원래 HTML의 기본 (고유)기능을 없애준다.
+                    event.preventDefault();
+                    console.log('서밋 실행')
+                    
+            const search = document.querySelector('#search');      
+            document.querySelector('submit').addEventListener('click', function () {
+                        if (search.value.length < 2) {
+                            alert('2글자 이상으로 검색')
+                        } else {
+                            console.log('검색');
+                        }
+                    })
+
+                })
+            
+            
+            // 클래스가 chk인 모든 요소를 가져와 모든 value를 console로 출력
+            // value, 체크 여부를 console로 출럭
+            // 체크된 것은 value에 느낌표 !!!개 붙여서 출력
+
+            const chks = document.querySelectorAll('.chk');
+            for(let i=0; i<chks.length; i++){
+                console.log(chks[i].value, chks[i].checked)
+
+                if(chks[i].checked){
+                    console.log("!!!", chks[i].value)
+                }
+            }
+            // chks[0].checked = true;            
+            // chks[3].checked = false;            
+        
+            
+            // 전체 선택시 전체 선택 되게
+            // 전체 선택 관련 dom 확보
+            // 전체 선택 클릭하면 모든 chk 체크 되게
+            // 체크 되어 있으면 해제 되게
+
+            
+            const checkAll = document.querySelector('#checkAll');
+            checkAll.addEventListener('click',function(){
+                for (let i = 0; i < chks.length; i++) {
+                    if (checkAll.checked) {
+                        chks[i].checked = true;
+                    } else {
+                        chks[i].checked = false;
+                    }
+                }
+            })
+
+            // 자식 체크 박스 중 모두 체크되어 있으면 전체 선택 체크
+            // 자식 체크 박스 중 하나라도 풀려있으면, 전체 선택 해제 
+            for( let chk of chks ){
+                // 각각 클릭 이벤트 주기
+                chk.addEventListener('click', function(){
+                    let flag = true;
+                    // 하나라면 해제된 게 있다면,
+
+                    for( let i of chks){
+                        if(!chks[i].checked){
+                            flag = false;
+                            break;
+                        }
+                    }
+                    if(!flag){
+                        document.querySelector('#checkAll').checked = false;
+                    } else {
+                        document.querySelector('#checkAll').checked = true;
+                    }
+                })
+                //this : window 객체를 가지고 있다.
+                console.log(this);
+
+                document.querySelector('#parent')
+                .addEventListener('click',function(event){
+
+                    
+
+                    // event.target 이벤트가 발생한 dom을 말한다.
+                    // (부모를 클릭하면 부모, 자식을 클릭하면 자식)
+                    console.log('event.target : ', event.target)
+
+                    // event.curret.Target : 이벤트가 적용된 DOM
+                    console.log('event.currentTarget : ', event.currentTarget)
+
+
+                    // this 는 더이상 window가 아니다.
+                    // js에서 this는 알고있는 것만 사용할 것.
+                    console.log('this : ',this);
+                    console.log(this === event.curretTarget);
+                }, true)
+
+                
+                document.querySelector('#child1')
+                .addEventListener('click',function(event){
+                    event.stopPropagation();
+                    console.log('자식 1 클릭')
+
+                    document.querySelector('#parent').innerHTML += ""
+                })
+                
+                
+
+
+                
+                
+        // 클릭 > 반복문으로 다 끔 > 볼드
+        const desk =document.querySelectorAll('.desk');
+        
+        for (let i = 0; i < desk.length; i++) {
+                desk[i].addEventListener('click', function(event) {
+
+                    for(let j= 0; j<desk.length;j++){
+                    desk[j].style.color = 'gray';
+                    desk[j].style.fontWeight = '100';
+                    }
+                    event.target.style.color='black';
+                    event.target.style.fontWeight='900';
+                    
+                });
+            }
+
+            
+            }
+
+
+
+
         }
 
         function btn1click(){
-            console.log("버튼 1 클릭")
+            console.log("버튼1 클릭")
 
-            document.querySelector("#console").innerHTML += "<br>버튼 1 클릭";
+            document.querySelector("#console").innerHTML += "<br>버튼1 클릭";
         }
 
         function btn4click(){
-            console.log("버튼 4 클릭")
-            document.querySelector("#console").innerHTML += "<br>버튼 4 클릭";
+            document.querySelector("#console").innerHTML += "<br>버튼4 클릭";
         }
+        // const btn4click = function(){
+        //     document.querySelector("#console").innerHTML += "<br>버튼4 클릭";
+        // }
+        
+        // 로그인 버튼 클릭 시
+        // #console에 아이디, 비밀번호 출력하기
+
 
         
 
+
     </script>
 </head>
-<!-- <body onload="javascript:init()"> -->
-    <body>
-    
-    <div id = "console"></div>
-    <button type="button" id="btn1" onclick="javascript:btn1click()">버튼1</button><br>
+<!-- <body onload="javascript:init()">  -->
+<body>
+    <div id="console"></div>
+
+    <button type="button" id="btn1" onclick="btn1click();alert(1);">버튼1</button><br>
     <button type="button" id="btn2">버튼2</button><br>
     <button type="button" id="btn3">버튼3</button><br>
     <button type="button" id="btn4">버튼4</button><br>
 
     <div>
-        아이디 1: <input type = "text" id="id"><br>
-        비밀번호 : <input type = "password" id = "pw"><br>
+        아이디 : <input type="text" id="id"><br>
+        비밀번호 : <input type="password" id="pw"><br>
         <br>
-        <input type="button" id="loginbtn" value="로그인">
+        <input type="button" id="login" value="로그인">
     </div>
+
+    <div id="area" style="width: 100px; height:100px; background-color: red;">
+
+    </div>
+
+    <img id="cursor" src="https://png.pngtree.com/png-vector/20230522/ourmid/pngtree-kawaii-brown-white-cat-jumping-happily-vector-png-image_7105169.png">
+
+<form id = "form" mothod="get" action="https://search.naver.com/search.naver">
+    네이버 검색 : <input type = "text" name="query" id="search">
+    <input type = "submit" value="검색">
+</form>
+
+
+
+떡볶이 토핑 : <input type="checkbox" id = checkAll> 전체선택 <br>
+<input type = "checkbox" class="chk" value="분모자">분모자</input>
+<input type = "checkbox" class="chk" value="비엔나">비엔나</input>
+<input type = "checkbox" class="chk" value="우삼겹">우삼겹</input>
+<input type = "checkbox" class="chk" value="치즈">치즈</input>
+
+<div id="parent">부모
+    <div id="child1">자식1</div>
+    <div id="child2">자식2</div>
+</div>
+
+<ul class="desk">
+    <li>1</li>
+    <li>2</li>
+    <li>3</li>
+    <li>4</li>
+    <li>5</li>
+</ul>
+
+<hr>
+<div id="li_1">첫번째</div>
+<div id="li_2">두번째</div>
+
+<script>
+    let li_1=document.querySelector('#li_1');
+    console.log(li_1);
+
+    li_1.addEventListener('click', function(){
+        console.log('1');
+        console.log(li_1);
+        console.log(event.target);
+        console.log(li_1 === event.target);
+        // 실제 이벤트가 발생한 녀석
+        console.log(event.currentTarget);
+        console.log(li_1 === event.currentTarget);
+        // event가 묻은 DOM
+
+    })
+
+    let li_2=document.querySelector('#li_2');
+    li_2.addEventListener('click',function(){
+        console.log('2');
+    })
+
+</script>
+
+<ol id="ol">
+    <li id="ol_li_1">li 첫번째</li>
+    <li id="ol_li_2">li 두번째</li>
+</ol>
+
+<script>
+    // ol을 클릭했을 때, 
+    // event, target, event.currentTarget 출력 
+    
+    let ol = document.querySelector('#ol')
+    ol.addEventListener('click',function(){
+        console.log('event :', event);
+        console.log('target :',event.target);
+        console.log('currentTarget :', event.currentTarget);
+
+        event.target.style.color='red';
+        event.target.classList.add('bold');
+    })
+
+
+    // document.querySelector('#ol_li_1').classList.remove()
+</script>
 
 </body>
 </html>

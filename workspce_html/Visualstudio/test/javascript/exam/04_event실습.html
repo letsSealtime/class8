@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <input type="password" id="pwd" placeholder="비밀 번호를 입력하세요"><br>
+    <input type="password" id="pwdCheck" placeholder="같은 값을 입력하세요"><br>
+    <button id="loginbtn">로그인</button>
+    <p id="message"></p>
+
+<hr>
+
+    <br>
+    <input type="text" id="name" placeholder="이름"><br>
+    <input type="text" id="phone" placeholder="전화번호"><br>
+    <input type="text" id="adress" placeholder="주소"><br>
+
+    <input type="checkbox" id="same" onclick="checkAdress()">주문 정보와 배송 정보가 같습니다<br>
+    <input type="text" id="name2" placeholder="이름"><br>
+    <input type="text" id="phone2" placeholder="전화번호"><br>
+    <input type="text" id="adress2" placeholder="주소"><br>
+
+<hr>
+
+<h1>문제3 - 피자 주문 내역 출력</h1>
+<div>
+    피자 종류
+    <select id="kind">
+        <option value="1" data-name="불고기" data-value="5000">불고기</option>
+        <option value="2" data-name="야채">야채</option>
+        <option value="3" data-name="고구마">고구마</option>
+        <option value="4" data-name="치즈">치즈</option>
+        <option value="5" data-name="페페로니">페페로니</option>
+    </select>
+    <br>
+    사이즈
+    <input type="radio" name="size" value="1">미디움
+    <input type="radio" name="size" value="2" checked="checked">라지
+    <input type="radio" name="size" value="3" data-value="15000">패밀리
+    <br>
+    토핑
+    <input type="checkbox" name="topping" value="1" data-name="올리브" data-value="500">올리브
+    <input type="checkbox" name="topping" value="2" data-name="파인애플">파인애플
+    <input type="checkbox" name="topping" value="3" data-name="치즈" data-value="1500">치즈
+    <input type="checkbox" name="topping" value="4" data-name="페페로니">페페로니
+    <br>
+    요청사항 <input type="text" id="request">
+    <br>
+    <button type="button" id="order">주문하기</button>
+    <div id="view"></div>
+</div>
+
+    <script>
+
+const order = document.querySelector('#order');
+order.addEventListener('click',function()){
+    const kind = document.querySelector("#kind");
+    const size = document.querySelector('[name="size"]:checked');
+}
+
+// const order = document.querySelector("#order");
+//             order.addEventListener('click', function(){
+//                 const kind = document.querySelector("#kind");
+//                 const size = document.querySelector('[name="size"]:checked');
+//                 const toppings = document.querySelectorAll('[type=checkbox]:checked');
+//                 const request = document.querySelector('#request');
+//                 const view = document.querySelector('#view');
+                
+//                 view.innerHTML = "주문하신 내역은<br>"
+//                 // select
+//                 console.log(kind.value)
+//                 // value 이용하기
+//                 // if(kind.value == 1){
+//                 //     view.innerHTML += "불고기피자"
+//                 // } else if(kind.value == 2){
+//                 //     view.innerHTML += "야채피자"
+//                 // }
+                
+//                 // option에 적은 글 이용하기
+//                 // view.innerHTML += kind.querySelector("option:checked").textContent + "피자"
+
+//                 // option의 속성 이용하기
+//                 view.innerHTML += kind.querySelector("option:checked").getAttribute("data-name") + "피자"
+//                 view.innerHTML += "<br>"
+
+//                 view.innerHTML += "사이즈 : "
+//                 console.log('size ', size.value)
+//                 if(size.value == 1){
+//                     view.innerHTML += "미디움"
+//                 } else if(size.value == 2){
+//                     view.innerHTML += "라지"
+//                 } else if(size.value == 3){
+//                     view.innerHTML += "패밀리"
+//                 }
+//                 view.innerHTML += "<br>"
+
+                
+//                 // toppings : 배열
+//                 // 반복문 : for, forEach, while, for-in, for-of, map
+//                 toppings.forEach(function(element, index, array){
+//                     view.innerHTML += element.getAttribute("data-name")
+//                     if(index != array.length-1){
+//                         view.innerHTML += ","
+//                     }
+//                 })
+
+//                 view.innerHTML += '<br>요청사항 : '
+//                 view.innerHTML += request.value
+
+//             })
+
+
+
+const loginbtn = document.getElementById('loginbtn');
+loginbtn.addEventListener("click",passwordCheck);
+
+function passwordCheck(){
+    const pwd = document.getElementById('pwd').value;
+    const pwdCheck = document.getElementById('pwdCheck').value;
+    const message = document.getElementById('message');
+
+
+    if(pwd !== pwdCheck){
+    message.textContent = '비밀번호를 확인하세요';
+    message.style.color = 'red';
+} else {
+    message.textContent = '';
+}
+}
+
+
+function checkAdress(){
+const same = document.getElementById('same').checked;
+
+
+
+    const name2 = document.getElementById('name2');
+    const phone2 = document.getElementById('phone2');
+    const adress2 = document.getElementById('adress2');
+
+    if (same){
+    const name = document.getElementById('name').value;
+    const phone = document.getElementById('phone').value;
+    const adress = document.getElementById('adress').value;
+
+    name2.value = name;
+    adress2.value = adress;
+    phone2.value = phone;
+} else {
+    name2.value = '';
+    adress2.value = '';
+    phone2.value = '';
+}
+
+}
+
+
+
+    </script>
+
+    <!-- 문제1
+    비밀번호
+    비밀번호 확인
+    
+    로그인 버튼 클릭 시 
+    두개의 값이 다르면 : 
+    빨간글씨로 "비밀번호 확인하세요" 글씨 출력
+    두개의 값이 같으면 : 확인문자 지우기
+    
+    
+    문제2
+    배송정보의 checkbox 클릭시
+    주문정보의 내용을 배송정보에 복사
+    
+    문제3
+    피자주문 시스템
+    피자 종류 select
+    사이즈 radio
+    토핑 checkbox
+    요청사항 input text
+    
+    주문하기 버튼 클릭 시
+    주문 내역 표시 
+    (총 금액까지 표시) -->
+
+
+ 
+
+
+
+</body>
+</html>

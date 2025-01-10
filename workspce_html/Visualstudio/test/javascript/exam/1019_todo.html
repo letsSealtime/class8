@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <!-- TODO리스트
+
+    input, [추가버튼]
+    ㅁ전체선택, [선택삭제]
+    
+    추가버튼 클릭 시 
+    input의 내용을 console로 출력
+    
+    그 내용을 일단 아래 html영역에 표시
+    
+    일정한 구조를 가지는 html로 추가
+        - 체크박스, 내용, 삭제 버튼
+        - 목록의 위 또는 아래 자유롭게 선택
+    
+    체크박스에 체크가 되면 할일에 취소선 표시
+    
+    개별 삭제 버튼 클릭 시 그 객체만 삭제
+        - remove()
+    
+    선택삭제버튼 클릭 시 체크된 모든 객체 삭제 -->
+    
+    <!-- 0. HTML 구현
+    input text, 추가 버튼, 삭제 버튼
+    div 요소 > 체크박스[] - 오늘의 할일[] 
+    
+    0.1 가져오기 > 추가, 삭제, 리스트, todo_check[], todo_list[]
+    1. 추가 > 이벤트.innerText 내용을 배열에 추가
+    2. 취소선 > 이벤트. 스타일 취소선
+    3. 삭제 > 이벤트. remove -->
+
+<script>
+window.addEventListener("load", init);
+function init(){
+
+let add_btn = document.querySelector('#add_btn');
+let del_btn = document.querySelector('#del_btn');
+let list = document.querySelector('#list');
+
+let show_area = document.querySelector('#show_area');
+
+let show_list = document.querySelector('#show_list')
+
+// 1. 클릭 이벤트 > push로 체크박스와 리스트.value를 추가한다
+// 화면에 출력(해야하는데 innerHTML 사용해서 출력해보기)
+
+
+add_btn.addEventListener('click',function(){
+    // 체크박스에 해당되는 HTML코드를 적음
+    // input type checkbox
+    
+        show_area.innerHTML +=
+            '<div id="show_list"><input type="checkbox" id="checkbox">' + list.value + '</div>'
+        list.value = '';
+})
+
+
+// 취소선
+// addEvent click > if (event.target.checkbox)  > target.innerHTML > <del></del>
+// else innerHTML > target.innerHTML > 
+
+show_area.addEventListener('click',function(event){
+
+    if (event.target.checked){
+        show_area.innerHTML = '<del>' + show_list + '</del>';
+    } else {
+        show_area.innerHTML = show_list;
+    }
+})
+
+// 삭제
+
+
+}
+</script>
+
+<input type="text" id="list" placeholder="오늘의 할일을 입력하세요">
+<button id="add_btn">추가</button>
+<button id="del_btn">삭제</button>
+<br>
+    <div id="show_area"></div>
+    <!-- <div id="check_show"></div>
+    <div id="list_show"></div> -->
+
+
+<&nbsp;>
+</body>
+</html>

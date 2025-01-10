@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        body{
+            margin:0px;
+        }
+        #logo{
+            height:50px;
+            background-color: bisque;
+        }
+
+        .poster_area{
+            height:45vh;
+            background-color: cadetblue;
+            padding-top:50px;
+            padding-left:20px;
+            text-align: center;
+        }
+
+        .poster_area_1{
+            display:inline-block;
+            background-color: darkorange;
+            height:300px;
+            width:250px;
+            margin-right:40px;
+        }
+
+        .movie_poster{
+            display: inline-block;
+            background-image: url(https://an2-img.amz.wtchn.net/image/v2/KtzcdjEpeV43IlzDPXbcjw.jpg?jwt=ZXlKaGJHY2lPaUpJVXpJMU5pSjkuZXlKdmNIUnpJanBiSW1SZk5Ea3dlRGN3TUhFNE1DSmRMQ0p3SWpvaUwzWXlMM04wYjNKbEwybHRZV2RsTHpJd09UZzRNVFF6TkRjME5qRTBOVGtpZlEuUUdYanFNNGFmTXhCV1AyenpvcUZpazBWMXZ4VU9yalBJSXNoNDR5a0VOMA);
+            height:100%;
+            width:100%;
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+
+        #movie_poster_info{
+            background-color: azure;
+        }
+
+        .movie_info{
+            height:25vh;
+            background-color: rgb(95, 160, 101);
+            
+        }
+
+        #movie_info_box{
+            padding:50px;
+            border: 1px solid black;
+            width:80%;
+            margin: 0 auto;
+        }
+
+
+        .reply_area{
+            height:10vh;
+            background-color: coral;
+            
+        }
+
+        .user_reply_area
+        {
+            height:25vh;
+            background-color: darkgray;
+        }
+
+    </style>
+</head>
+<body>
+    
+    <!-- [6.] 영화 댓글 별점 관리
+    영화는 5개 정도 고정(+영화 추가/수정/삭제)
+    영화 클릭 시 상세 정보 표시
+    댓글+별점 추가 UI
+    댓글+별점 표시 +삭제버튼 (+수정버튼) -->
+
+    <!-- 
+    0. HTML 
+    로고 영역
+    포스터 영역 (포스터, 제목, 별점) *4
+    영화 소개 영역 
+    덧글 영역 (입력창, 별점, 쓰기 버튼)
+    입력된 덧글 창 영역 (덧글 내용, 별점, 삭제 버튼, 수정 버튼)
+    -->
+
+    <!-- JS
+    1. 포스터 영역 구현하기
+    2. 영화 소개 영역. 누르기 전엔 첫 영화 정보
+    포스터를 click, 그 영화 정보가 display
+    3. 덧글 영역. 쓰기 버튼 click > 변수 reply 에 저장
+        별점 select 넣고 값을 변수 score 에 저장
+    4. 덧글 영역에 추가. div 영역을 만들어, reply와 score의 value를 넣는다.
+    5. 삭제. 클릭하면 target.div를 remove
+    수정은 일단 패스 -->
+
+
+    <script>
+        window.addEventListener("load", init);
+        function init(){
+            
+            let movie_poster = document.querySelectorAll('.movie_poster');
+            let movie_info_text = document.querySelectorAll('.movie_info_text');
+    
+
+            for(let i=0; i<movie_poster.length; i++){
+                movie_poster[i].addEventListener('click',function(){
+
+                    for(let j = 0; j<movie_info_text.length; j++){
+                        movie_info_text[j].style.display = 'none';
+                    }
+                    movie_info_text[i].style.display ='inline-block';
+                });
+            }
+
+
+            // 덧글
+            let reply = document.querySelector('#reply');
+            let score = document.querySelector('#score');
+            let input_button = document.querySelector('#input_button');
+            let reply_value;
+            let score_value;
+
+            input_button.addEventListener('click', function(event){
+                if (reply.value.trim() === ""){
+                    window.alert('덧글을 입력해 주세요');
+                } else {
+
+                    reply_value = reply.value;
+                    score_value = score.value;
+
+                    reply.value = '';
+                    score.value = '';
+
+                    make_reply(reply_value, score_value);
+                }
+            })
+            
+            // 덧글 영역에 추가.
+
+            let user_reply = document.querySelector('#user_reply');
+            
+
+            function make_reply(reply_value, score_value) {
+                let new_reply = document.createElement('div');
+                new_reply.innerHTML = `<span>${reply_value}</span><span>${score_value}</span>
+                <button id="delete_button">삭제</button><button id="modify_button">수정</button>`;
+                
+                user_reply.appendChild(new_reply);
+            }
+
+            //삭제
+            // 삭제 누르면 > 선택된 div 요소가 지워져야 한다.
+
+            user_reply.addEventListener('click', function(event){
+                if(event.target.id == 'delete_button'){
+                    event.target.parentNode.remove();
+                }
+            })
+
+            // 수정
+            // create > div > input text, 확인 버튼
+            // 값 저장
+            // remove > div
+            // 재설정
+
+            user_reply.addEventListener('click',function(event){
+                if(event.target.id == 'modify_button'){
+                    let modifyReply = document.createElement('div');
+                    modifyReply.innerHTML = `<input type="text" placeholder="덧글을 적어주세요." id="modify_text"></input>
+                    <select id="modify_score">
+                        <option value="1">☆</option>
+                        <option value="2">☆☆</option>
+                        <option value="3">☆☆☆</option>
+                        <option value="4">☆☆☆☆</option>
+                        <option value="5">☆☆☆☆☆</option>
+                    </select>
+                    <button id="reply_check">확인</button>`;
+
+                    event.target.parentNode.appendChild(modifyReply);
+                }
+            });
+
+
+            user_reply.addEventListener('click', function (event) {
+               
+                // 확인을 누르면, 
+                // input 창의 내용을 읽어
+                // 원래 글씨를 바꾼다....
+                // 수정관련 UI를 감춘다.
+
+                if (event.target.id == 'reply_check') {
+                    let modify_text = document.querySelector('#modify_text');
+                    let modify_score = document.querySelector('#modify_score');
+                    let modify_text_value = modify_text.value;
+                    let modify_score_value = modify_score.value;
+                    
+                    function modify_text_1(modify_text_value,modify_score_value) {
+                        let new_reply = document.createElement('div');
+                        new_reply.innerHTML = `<span>${modify_text_value}</span><span>${modify_score_value}</span>
+                        <button id="delete_button">삭제</button><button id="modify_button">수정</button>`;
+                        
+                        event.target.parentNode.remove();
+                    }
+                }
+            })
+
+
+
+        }
+    </script>
+    <div id="logo">로고</div>
+    <div class="poster_area">
+        <div class="poster_area_1">
+            <div class="movie_poster">포스터</div>
+            <div id="movie_poster_info">
+                <div id="movie_title">제목</div>
+                <div id="movie_score">별점</div>
+            </div>
+        </div>
+        <div class="poster_area_1">
+            <div class="movie_poster">포스터</div>
+            <div id="movie_poster_info">
+                <div id="movie_title">제목</div>
+                <div id="movie_score">별점</div>
+            </div>
+        </div>
+
+        <div class="poster_area_1">
+            <div class="movie_poster">포스터</div>
+            <div id="movie_poster_info">
+                <div id="movie_title">제목</div>
+                <div id="movie_score">별점</div>
+            </div>
+        </div>
+
+        <div class="poster_area_1">
+            <div class="movie_poster">포스터</div>
+            <div id="movie_poster_info">
+                <div id="movie_title">제목</div>
+                <div id="movie_score">별점</div>
+            </div>
+        </div>
+
+    </div>
+    <div class="movie_info">영화 소개
+        <div id="movie_info_box">
+            <div class="movie_info_text" style="display: none;">1</div>
+            <div class="movie_info_text" style="display: none;">2</div>
+            <div class="movie_info_text" style="display: none;">3</div>
+            <div class="movie_info_text" style="display: none;">4</div>
+        </div>
+    </div>
+    <div class="reply_area">
+        <input type="text" placeholder="덧글을 적어주세요" id="reply"></input>
+        <select id="score">
+            <option value="1">☆</option>
+            <option value="2">☆☆</option>
+            <option value="3">☆☆☆</option>
+            <option value="4">☆☆☆☆</option>
+            <option value="5">☆☆☆☆☆</option>
+        </select>
+        <button id="input_button">쓰기</button>
+    </div>
+    <div class="user_reply_area">
+        <div id="user_reply">
+        </div>
+    </div>
+
+</body>
+</html>
