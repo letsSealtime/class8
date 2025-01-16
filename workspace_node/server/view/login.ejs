@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>hello world <%= food %> </h1>
+    <form method="get" action="login_check_get">
+        id : <input type="text" name="id"><br>
+        <input type="submit" value="로그인get">
+    </form>
+
+    <form method="post" action="login_check_post">
+        id : <input type="text" name="id"><br>
+        <input type="submit" value="로그인post">
+    </form>
+
+    <input type="text" id="text"><input type="button" id="btn" value="보내기">
+    <div id="list"></div>
+    <script>
+        const ws = new WebSocket('ws://127.0.0.1:50000')
+        // http 프로토콜 아님.
+
+        ws.onopen = function(){
+            console.log('웹소켓 서버 접속 완료')
+        }
+
+        ws.onmessage = function(event){
+            // 메세지 이벤트 발생
+            console.log(event.data)
+            document.querySelector('#list').innerHTML += '<br>',event.data
+        }
+
+        document.querySelector('#btn').addEventListener('click',function(){
+            let text = document.querySelector('#text').value
+            ws.send(text);
+        })
+    </script>
+</body>
+</html>

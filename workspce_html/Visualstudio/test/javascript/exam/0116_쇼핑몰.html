@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    body{margin:0px;}
+
+    .header
+        {background-color: beige;
+        height:15vh;
+    }
+
+    .menu_name{
+        background-color: cadetblue;
+        height:8vh;
+    }
+
+    .container {
+	display: flex;
+	flex-wrap: wrap;
+    }
+
+    .item_box{
+        background-color: rgb(225, 235, 255);
+        flex : 1 1 20%;
+        height : 40vh;
+    }
+    
+    .item_img{
+        width:150px;
+        height:150px;
+        background-size:cover;
+        margin: 40px;
+    }
+    #item_img1{
+        background-image: url(https://contents.kyobobook.co.kr/sih/fit-in/400x0/gift/pdt/1342/hot1727685664844.jpg);
+        
+        }
+
+    #item_img2{
+        background-image: url(https://contents.kyobobook.co.kr/sih/fit-in/600x0/gift/pdt/1640/hot1729138461561.jpg);
+        
+        }
+
+    #item_img3{
+        background-image: url(https://contents.kyobobook.co.kr/sih/fit-in/400x0/gift/pdt/1281/hot1729585390891.jpg);
+        
+        }
+
+    #item_img4{
+        background-image: url(https://contents.kyobobook.co.kr/sih/fit-in/400x0/gift/pdt/1594/hot1735191942886.jpg);
+
+        }
+
+    #item_img5{
+        background-image: url(https://contents.kyobobook.co.kr/sih/fit-in/600x0/gift/pdt/1323/hot1729843860876.jpg);
+        }
+
+    .cart_menu{
+        background-color: darksalmon;
+        height:8vh;
+    }
+
+    .button_area{
+        background-color:honeydew;
+        height:8vh;
+        line-height: 8svh;
+    }
+
+    .price_area{
+        background-color: rgb(181, 188, 172);
+        height:30vh;
+    }
+</style>
+<body>
+
+<!-- 1단계
+9개 이상의 상품(이름+가격+장바구니 담기)이 있을 때
+상품별로 장바구니 담기 버튼 클릭 시 장바구니에 추가
+상단의 장바구니 보기 클릭 시 장바구니에 담은 상품들 + 결제 버튼 표시
+
+2단계
+9개 이상의 상품(이름+가격+장바구니 담기)이 있을 때
+상품별로 장바구니 담기 버튼 클릭 시 장바구니에 추가
+상단의 장바구니 보기 클릭 시 장바구니에 담은 상품들 + 결제 버튼 표시
+결제 클릭 시 장바구니에서 체크한 것만 몇개의 상품 + 총액 표시
+
+3단계
+상품 추가/수정/삭제
+장바구니 삭제 -->
+
+<script>
+    window.addEventListener("load", init);
+    function init(){
+
+        // 1. 장바구니에 담기
+        // 담기 클릭, 배열에 이미지, 이름, 가격 값 가져옴
+        // cart 영역에 추가 
+
+        document.querySelectorAll('.container').forEach(function (container){
+            container.addEventListener('click', function (event) {
+                if (event.target.id == 'item_cart') {
+                    let parentBox = event.target.closest('.item_box');
+
+                    let itemImg = parentBox.querySelector('.item_img');
+                    let itemName = parentBox.querySelector('.item_name').innerText
+                    let itemPrice = parentBox.querySelector('.item_price').innerText
+
+                    addCart(itemImg, itemName, itemPrice);
+                }
+            });
+        });
+
+        function addCart(itemImg, itemName, itemPrice){
+            let cartArea = document.querySelector('.cart_area');
+
+            let cartItem = document.createElement('div');
+            cartItem.classList.add('cart_item');
+            cartItem.innerHTML = `
+            <input type="checkbox" id="chk">
+            <div>${itemImg.outerHTML}</div>
+            <span id="item_name">${itemName}</span>
+            <span id="item_price">${itemPrice}</span>
+            `;
+
+            cartArea.appendChild(cartItem);
+        }
+
+        // 2. 장바구니에서 지우기
+        // 체크된 div 영역 삭제
+
+        let deleteButton = document.querySelector('#delete_button');
+
+        deleteButton.addEventListener('click', function(event){
+            let chk = document.querySelector('#chk:checked');
+            let chk_div = chk.parentNode;
+            chk_div.remove();
+        })
+
+
+        // 3. 결제 클릭 시, 선택된 내역의 수량과, 총액 표시
+
+        let buyButton = document.querySelector('#buy_button');
+        buyButton.addEventListener('click',function(){
+            let chk = document.querySelector('#chk:checked');
+            // let buyItem = [];
+            // let buyPrice = [];
+            let  buyItem = chk.querySelector('#item_name').innerText;
+            let buyPrice = chk.querySelector('#item_price').innerText;
+            console.log(buyPrice);
+        })
+
+
+
+
+
+    }
+
+
+</script>
+
+    <div class="header">
+        <div id="logo">logo</div>
+        <div id="cart_icon">카트아이콘</div>
+        <div id="search_icon">검색아이콘</div>
+    </div>
+
+    <div class="menu_name">
+        <div id="shop">SHOP</div>
+    </div>
+
+<div class="container">
+    <div class="item_box">
+        <div class=item_img id="item_img1"></div>
+        <div class="item_name">2025 포커스온 위클리 플래너</div>
+        <div class="item_price">18000</div>
+        <button id="item_cart">장바구니 담기</button>
+    </div>
+    <div class="item_box">
+        <div class=item_img id="item_img2"></div>
+        <div class="item_name">루카랩 2025 레코드 아카이브 오리지널 다이어리</div>
+        <div class="item_price">15900</div>
+        <button id="item_cart">장바구니 담기</button>
+    </div>
+    <div class="item_box">
+        <div class=item_img id="item_img3"></div>
+        <div class="item_name">[날짜형] 2025 A Piece Of 프로젝트 다이어리</div>
+        <div class="item_price">12300</div>
+        <button id="item_cart">장바구니 담기</button>
+    </div>
+    <div class="item_box">
+        <div class=item_img id="item_img4"></div>
+        <div class="item_name">[누아 콜라보] A6 실키북 서브 다이어리 (만년형) 2종
+        </div>
+        <div class="item_price">9900</div>
+        <button id="item_cart">장바구니 담기</button>
+    </div>
+    <div class="item_box">
+        <div class=item_img id="item_img5"></div>
+        <div class="item_name">[이규태 콜라보] 시그니처 다이어리 파우치 세트</div>
+        <div class="item_price">41000</div>
+        <button id="item_cart">장바구니 담기</button>
+    </div>
+</div>
+
+<div class="container">
+    <div class="item_box">
+        <div class=item_img id="item_img1"></div>
+        <div class="item_name">2025 포커스온 위클리 플래너</div>
+        <div class="item_price">18000</div>
+        <button id="item_cart">장바구니 담기</button>
+    </div>
+    <div class="item_box">
+        <div class=item_img id="item_img2"></div>
+        <div class="item_name">루카랩 2025 레코드 아카이브 오리지널 다이어리</div>
+        <div class="item_price">15900</div>
+        <button id="item_cart">장바구니 담기</button>
+    </div>
+    <div class="item_box">
+        <div class=item_img id="item_img3"></div>
+        <div class="item_name">[날짜형] 2025 A Piece Of 프로젝트 다이어리</div>
+        <div class="item_price">12300</div>
+        <button id="item_cart">장바구니 담기</button>
+    </div>
+    <div class="item_box">
+        <div class=item_img id="item_img4"></div>
+        <div class="item_name">[누아 콜라보] A6 실키북 서브 다이어리 (만년형) 2종
+        </div>
+        <div class="item_price">9900</div>
+        <button id="item_cart">장바구니 담기</button>
+    </div>
+    <div class="item_box">
+        <div class=item_img id="item_img5"></div>
+        <div class="item_name">[이규태 콜라보] 시그니처 다이어리 파우치 세트</div>
+        <div class="item_price">41000</div>
+        <button id="item_cart">장바구니 담기</button>
+    </div>
+</div>
+
+<div class="menu_name"div>
+    <div>CART</div>
+</div>
+
+<div class="cart_menu">
+    <div>상품정보</div>
+    <div>수량</div>
+    <div>주문금액</div>
+</div>
+
+<div class="cart_area"></div>
+
+<div class="button_area">
+    <button id="delete_button">선택 상품 삭제</button>
+    <button id="buy_button">선택 상품 구매</button>
+</div>
+
+<div class="price_area">
+    <div id="count">총 주문 수량</div>
+    <div id="total_price"></div>
+</div>
+
+</body>
+</html>

@@ -15,7 +15,7 @@
         }
 
         .poster_area{
-            height:45vh;
+            height:55vh;
             background-color: cadetblue;
             padding-top:50px;
             padding-left:20px;
@@ -170,46 +170,51 @@
 
             user_reply.addEventListener('click',function(event){
                 if(event.target.id == 'modify_button'){
+                    let parent = event.target.parentNode;
+                    let modify_ui = parent.querySelector('.modify_ui');
+
+                    if (modify_ui){
+                        modify_ui.remove();
+                    }
+
                     let modifyReply = document.createElement('div');
-                    modifyReply.innerHTML = `<input type="text" placeholder="덧글을 적어주세요." id="modify_text"></input>
-                    <select id="modify_score">
+                    modifyReply.classList.add('modify_ui');
+                    modifyReply.innerHTML = `<input type="text" placeholder="덧글을 적어주세요." class="modify_text"></input>
+                    <select class="modify_score">
                         <option value="1">☆</option>
                         <option value="2">☆☆</option>
                         <option value="3">☆☆☆</option>
                         <option value="4">☆☆☆☆</option>
                         <option value="5">☆☆☆☆☆</option>
                     </select>
-                    <button id="reply_check">확인</button>`;
+                    <button class="reply_check">확인</button>`;
 
-                    event.target.parentNode.appendChild(modifyReply);
+                    parent.appendChild(modifyReply);
                 }
             });
 
 
             user_reply.addEventListener('click', function (event) {
-               
-                // 확인을 누르면, 
-                // input 창의 내용을 읽어
-                // 원래 글씨를 바꾼다....
-                // 수정관련 UI를 감춘다.
-
-                if (event.target.id == 'reply_check') {
-                    let modify_text = document.querySelector('#modify_text');
-                    let modify_score = document.querySelector('#modify_score');
-                    let modify_text_value = modify_text.value;
+                if (event.target.className === 'reply_check') {
+                    let modify_ui = event.target.parentNode;
+                    let parent = modify_ui.parentNode;
+                    
+                    
+                    let modify_text = modify_ui.querySelector('.modify_text');
+                    let modify_score = modify_ui.querySelector('.modify_score');
+                    let modify_text_value = modify_text.value.trim();
                     let modify_score_value = modify_score.value;
                     
-                    function modify_text_1(modify_text_value,modify_score_value) {
-                        let new_reply = document.createElement('div');
-                        new_reply.innerHTML = `<span>${modify_text_value}</span><span>${modify_score_value}</span>
-                        <button id="delete_button">삭제</button><button id="modify_button">수정</button>`;
-                        
-                        event.target.parentNode.remove();
-                    }
+                    
+                    parent.innerHTML=`
+                    <span>${modify_text_value}</span><span>${modify_score_value}</span>
+                <button id="delete_button">삭제</button><button id="modify_button">수정</button>
+                    `;
+                    
                 }
-            })
+            });
 
-
+            
 
         }
     </script>

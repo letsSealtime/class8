@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+
+<script>
+    window.addEventListener('load',function(){
+    })
+    $(function(){
+        // 페이지 로딩 끝나면 실행
+
+        init(); // HTML, CSS
+        bind(); // 클릭 이벤트
+        // 이렇게 두 개 자주 쓴다.
+    })
+    function init(){
+        const list_h1 = $('h1');
+        console.log(list_h1); // jQuery 배열 객체
+        console.log(list_h1[0]); // 순수한pure javascript
+        // <h1>첫번째</h1>가 표기되는데,
+        // 글씨로 대변되는 '객체'다.
+
+        // text()는 innerText에 해당
+        $('h1').text('싹다변경')
+        //html()는 innerHTML 에 해당
+        $('h1').html('<a href="javascript:void(0);">a tag</a>');
+        
+        console.log($("#parent")); // 하나짜리 배열
+        $("#parent").append("<div>자식2</div>");
+        $("#parent").prepend("<div>자식3</div>");
+        $("#parent").append($('h1')[0]);
+
+        // 값 지우는 방법
+        // $("#parent")[0].innerHTML = "";
+        $("#parent").html("")
+        $("#parent").empty();
+        $("#parent").remove();
+
+        $('#chk').addClass('cb2');
+        $('#chk').removeClass('cb2');
+        $('#chk').toggleClass('cb2');
+        if($('#chk').hasClass('cb2')){
+            console.log('cb2 클래스 있음')
+        };
+
+        console.log( $('#chk').attr('id'));
+         // 속성값 출력
+        $('#chk').attr('data-human', '두번째값');
+        // 속성값 변경
+
+        $('#chk').attr('data-game','arknights');
+        console.log( $('#chk').data('game'));
+        
+        $('#chk').data('dinner','치킨 마요');
+        console.log($('#chk').data('dinner'));
+        // 숨긴 데이터가 된다.
+
+        $('#chk').removeAttr('data-game');
+        
+        $('#chk').prop('checked', false);
+        
+        // console.log($('#chk').Val())
+        // console.log($('#input').Val('바꾼값'))
+
+        $('#input').css('border', '3px solid red');
+        console.log( $('#input').css('width','400px'));
+
+        //display : none - none을 제거
+        $('#input').hide()
+        $('#input').show()
+        
+        // 자식 요소 중에서 찾기
+        $('#parent2').find('.child2')
+        // 부모로 올라가기
+        $('#parent2').parent()
+        $('#parent2').parents('.grand')
+
+    }
+
+    function bind(){
+        $('.btn').on('click',function(event){
+            console.log(this) // event.currentTarget
+            console.log(event.target)
+        })
+
+        // $('.btn').off('click');
+        // 끄기
+
+        $('.btn').on('click.dom',function(event){})
+        $('.btn').on('click.ajax',function(event){})
+        // 이벤트명. 식별자로 특정 이벤트만 unbind할 수 있다.
+
+        $('.child2').on('click',function(){
+            // event.stopPropagation() 전달 하지 않기
+            return false
+        })
+
+    }
+
+</script>
+</head>
+
+<body>
+    <h1>첫번째</h1>
+    <h1>두번째</h1>
+    <h1>세번째</h1>
+
+    <div id="parent2">
+        부모
+        <div class="child2">
+            자식
+        </div>
+    </div>
+
+    <input type="checkbox" id="chk" val="val1" class="cb1" data-human="값" checked="checked">
+    <br>
+    <input type="text" id="input" value="미리완성">
+    <br>
+
+    <input type="button" class="btn" id="btn1" value="버튼1">버튼1</input>
+    <input type="button" class="btn" id="btn2" value="버튼2">버튼2</input>
+
+
+</body>
+</html>

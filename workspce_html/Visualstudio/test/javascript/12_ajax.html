@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        window.addEventListener('load',function(){
+            document.querySelector('#btn1').addEventListener('click',function(){
+
+                // ajax 객체 생성
+                const xhr = new XMLHttpRequest();
+
+                // 보낼 준비
+                // xhr.open('get','http://daum.net');
+                xhr.open('get','https://jsonplaceholder.typicode.com/users');
+
+                // 보내기
+                xhr.send();
+                // 다녀온 뒤
+                xhr.onload = function(){
+                    console.log('다녀왔습니다');
+                    console.log(xhr.responseText);
+                    
+                    // 첫번쨰 사람의 username
+                    const data = JSON.parse(xhr.responseText);
+                    console.log('data',data);
+
+                    console.log('data[0]',data[0]);
+                    console.log('username',data[0].username);
+
+                    // lat 출력
+                    console.log('lat',data[0].address.geo.lat);
+                }
+
+
+            })
+
+
+            document.querySelector('#btn5').addEventListener('click', function () {
+                // Pexels API로부터 랜덤 이미지 가져오기
+                const xhrPexels = new XMLHttpRequest();
+                xhrPexels.open('GET', 'https://api.pexels.com/v1/search?query=seals&per_page=1&page=' + Math.floor(Math.random() * 10) + 1);
+                xhrPexels.setRequestHeader('Authorization', 'ZotdqD0lGpHft2a702hkkFYkrWBjqwInjYoZMxOLkLn9ojGQFGeQ6ySP'); // Pexels API 키 입력
+
+                xhrPexels.onload = function () {
+                    if (xhrPexels.status === 200) {
+                        const response = JSON.parse(xhrPexels.responseText);
+                        const randomImage = response.photos[0].url; // 첫 번째 이미지의 URL 가져오기
+
+                        // Discord 웹훅 요청
+                        const xhrWebhook = new XMLHttpRequest();
+                        xhrWebhook.open('POST', 'https://discord.com/api/webhooks/1329358040914198570/bDhcWj-miTNuEF9iqjrytZ0grlF3ktJS2wtOMV0LW_zG-1bKaZWHZYfj3FwuEIGG_BMN');
+                        xhrWebhook.setRequestHeader('Content-Type', 'application/json');
+
+                        let param = {
+                            username: 'seal bot',
+                            content: 'Here is a random seal image:',
+                            embeds: [{
+                                image: {
+                                    url: randomImage // Pexels에서 가져온 랜덤 이미지 URL을 첨부
+                                }
+                            }]
+                        };
+
+                        xhrWebhook.send(JSON.stringify(param));
+                        xhrWebhook.onload = function () {
+                            console.log('이미지 전송 완료');
+                        };
+                    } else {
+                        console.error('Pexels API 요청 실패');
+                    }
+                };
+
+                xhrPexels.send();
+            });
+
+
+        })
+
+
+        window.addEventListener('load',function(){
+            document.querySelector('#btn3').addEventListener('click',function(){
+
+                const xhr = new XMLHttpRequest();
+
+                // get 방식의 전달인자 보내기
+                // 이런 주소가 있을 떄, "서버 ip:port/주소"
+                // 주소? 키 = 밸류&key=value&key2=value2
+
+                let url = 'http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtFcst'
+                url += '?'
+                url += 'serviceKey=ZEucOHe30nniQt2yz2h4r1uw67Hu3e8hp2f3PYPfXXy9s2weqD1HGoVlROIuPTCpf0O%2FbLjipuSG6Hc5znW9gQ%3D%3D'
+                url += '&'
+                url += 'dataType='+'JSON'
+                url += '&'
+                url += 'base_date='+'20250114'
+                url += '&'
+                url += 'base_time='+'0933'
+                url += '&'
+                url += 'nx='+'63'
+                url += '&'
+                url += 'ny='+'110'
+                url += '&'
+                url += 'numOfRows='+'100'
+                
+                
+                xhr.open('get',url);
+                xhr.send();
+                console.log(url);
+
+                xhr.onload = function(){
+                    console.log('다녀왔습니다');
+                    console.log(xhr.responseText);
+
+                    let data = JSON.parse(xhr.responseText);
+                    console.log('10시 기온',data.response.body.items.item[24].fcstValue);
+                    console.log('10시 강수량',data.response.body.items.item[12].fcstValue);
+                    console.log('10시 습도',data.response.body.items.item[30].fcstValue);
+                    
+                    console.log('11시 기온',data.response.body.items.item[25].fcstValue);
+                    console.log('11시 강수량',data.response.body.items.item[13].fcstValue);
+                    console.log('11시 습도',data.response.body.items.item[31].fcstValue);
+                    
+                    console.log('12시 습도',data.response.body.items.item[32].fcstValue);
+                    console.log('12시 강수량',data.response.body.items.item[14].fcstValue);
+                    console.log('12시 기온',data.response.body.items.item[26].fcstValue);
+
+                }
+
+                let filtered = item.filter(function(obj){
+                    if(obj.category == 'T1H'
+                        || obj.category == 'RN1'
+                        || obj.category == 'REH'
+                    ){ return true
+                    }
+                    return false
+                })
+                console.log(filtered)
+
+                console.log(item2)
+                let item3 = item2.sort(function(a,b){
+                    return a.fcstTime - b.fcstTime
+                })
+
+                // sort의 오름차순 알고리즘
+
+                let j = {}
+                j.열시 = 1
+                
+
+            })
+
+            // json을 사용해 보자
+            /* 
+            let result = {
+                1100 : {
+                T1H : 3,
+                RN1 : 강수없음,
+                REH : 30
+                }
+            }
+
+            
+            result['1900']['T1H'] = 3
+            이건 안 된다. 1900 부터 이미 undefined 
+            이렇게 하자
+            result['1900'] = {} 이렇게 먼저 JSON을 만들고,
+            result['1900']['T1H'] = 3 key 값을 넣는다.
+
+             */ 
+
+            document.querySelector('#btn4').addEventListener('click', function () {
+                const url = 'https://jsonplaceholder.typicode.com/users'
+                fetch(url);
+                
+                let option = {
+                    method: 'get',
+                    headers : {
+                        'key' : 'value'
+                    }
+                    // body : '{a:123}'
+                }
+                fetch(url, option)
+                // 이렇게 send까지 된다.
+                
+                fetch(url, option)
+                .then(function(response){
+                    // response 는 : fetch가 돌려준 응답 개체
+                    return response.json()
+                }).then(function(data){
+                    console.log(data)
+                }).catch(function(error){
+                    console.log(error)
+                })
+
+                // debugger
+
+
+        })
+    })
+
+    
+
+    </script>
+</head>
+<body>
+    <button type="button" id="btn1">ajax 실행</button>
+    <button type="button" id="btn2">lg디스플레이 실시간 주가</button>
+    <button type="button" id="btn3">날씨</button>
+    <button type="button" id="btn4">fetch</button>
+    <button type="button" id="btn5">디스코드</button>
+</body>
+</html>
