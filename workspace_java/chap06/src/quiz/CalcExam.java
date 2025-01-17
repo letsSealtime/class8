@@ -8,6 +8,9 @@ public class CalcExam {
 		Calc calc = new Calc();
 			double result = calc.compute(1, "+", 2.5);
 			System.out.println("결과 : " + result);
+			
+			
+		
 	}
 
 }
