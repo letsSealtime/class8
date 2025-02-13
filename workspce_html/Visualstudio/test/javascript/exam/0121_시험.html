@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MES 관리 시스템</title>
+    <style>
+        /* 기존 CSS 스타일 유지 */
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        .top {
+            height: 10vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #2c3e50;
+        }
+
+        #logo {
+            font-size: 36px; /* 로고 텍스트 크기 */
+            font-weight: bold; /* 로고 텍스트 두께 */
+            color: #ecf0f1; /* 로고 텍스트 색상 */
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* 텍스트 그림자 */
+        }
+
+        .header {
+            background-color: #34495e;
+            height: 10vh;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .menu {
+            flex: 1;
+            text-align: center;
+            padding: 15px;
+            color: #ecf0f1;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .menu:hover {
+            background-color: #1abc9c;
+        }
+
+        .board_area {
+            background-color: #ecf0f1;
+            height: 50vh;
+            padding: 20px;
+            overflow-y: auto;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .reply_area {
+            background-color: #dcdde1;
+            height: 30vh;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        #reply {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #bdc3c7;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            font-size: 16px;
+            /* 공백 추가 */
+            line-height: 1.5; /* 줄 간격을 늘려서 공백 효과 */
+        }
+
+        #input_button {
+            padding: 10px;
+            background-color: #1abc9c;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 10px; /* 버튼 위치를 올리기 위해 마진 추가 */
+        }
+
+        #input_button:hover {
+            background-color: #16a085;
+        }
+
+        .user_reply_area {
+            margin-top: 10px;
+            background-color: white;
+            padding: 10px;
+            border-radius: 5px;
+            max-height: 100px;
+            overflow-y: auto;
+            box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .user_reply {
+            margin: 5px 0;
+            padding: 5px;
+            border: 1px solid #bdc3c7;
+            border-radius: 3px;
+            background-color: #fff;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid #bdc3c7;
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #2c3e50;
+            color: #ecf0f1;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tr:hover {
+            background-color: #dfe6e9;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top">
+        <div id="logo">MES</div> <!-- 로고 텍스트로 변경 -->
+    </div>
+
+    <div class="header">
+        <div class="menu">생산 관리</div>
+        <div class="menu">자재 관리</div>
+        <div class="menu">영업 관리</div>
+        <div class="menu">작업 관리</div>
+        <div class="menu">품질 관리</div>
+    </div>
+
+    <div class="board_area">
+        <div class="board">
+            <table>
+                <tr>
+                    <th>상태</th>
+                    <th>지시일자</th>
+                    <th>품명</th>
+                    <th>품목코드</th>
+                </tr>
+                <tr>
+                    <td>진행 중</td>
+                    <td>2025-01-20</td>
+                    <td>제품 A</td>
+                    <td>P001</td>
+                </tr>
+                <tr>
+                    <td>완료</td>
+                    <td>2025-01-19</td>
+                    <td>제품 B</td>
+                    <td>P002</td>
+                </tr>
+                <tr>
+                    <td>대기 중</td>
+                    <td>2025-01-21</td>
+                    <td>제품 C</td>
+                    <td>P003</td>
+                </tr>
+                <tr>
+                    <td>진행 중</td>
+                    <td>2025-01-18</td>
+                    <td>제품 D</td>
+                    <td>P004</td>
+                </tr>
+                <tr>
+                    <td>완료</td>
+                    <td>2025-01-17</td>
+                    <td>제품 E</td>
+                    <td>P005</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="reply_area">
+        <input type="text" placeholder="덧글을 적어주세요" id="reply">
+        <button id="input_button">쓰기</button>
+        <div class="user_reply_area" id="user_reply">
+            <!-- 사용자 덧글이 여기에 추가됩니다 -->
+        </div>
+    </div>
+
+    <script>
+        window.addEventListener("load", init);
+        function init() {
+            // 덧글
+            let reply = document.querySelector('#reply');
+            let input_button = document.querySelector('#input_button');
+            let reply_value;
+
+            input_button.addEventListener('click', function(event) {
+                if (reply.value.trim() === "") {
+                    window.alert('덧글을 입력해 주세요');
+                } else {
+                    reply_value = reply.value;
+
+                    reply.value = '';
+
+                    make_reply(reply_value);
+                }
+            });
+
+            // 덧글 영역에 추가.
+            let user_reply = document.querySelector('#user_reply');
+
+            function make_reply(reply_value) {
+                let new_reply = document.createElement('div');
+                new_reply.innerHTML = `<span>${reply_value}</span>
+                <button class="delete_button">삭제</button>`;
+                
+                user_reply.appendChild(new_reply);
+            }
+
+            // 삭제
+            // 삭제 누르면 > 선택된 div 요소가 지워져야 한다.
+            user_reply.addEventListener('click', function(event) {
+                if (event.target.classList.contains('delete_button')) {
+                    event.target.parentNode.remove();
+                }
+            });
+        }
+    </script>
+
+</body>
+</html>

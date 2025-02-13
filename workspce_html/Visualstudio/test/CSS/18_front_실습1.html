@@ -4,7 +4,334 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="asset/18_front_실습1.css">
+    <style>
+        body{
+    margin:0;
+}
+
+.box0{
+    background-image: url("https://images03.nicepage.com/a1389d7bc73adea1e1c1fb7e/9b22e6f1444b5ae785f3a267/pexelsphoto3326103.jpeg");
+    height:60vh;
+    width:100vw;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position:30%;
+}
+
+.box0_top{
+    height:50px;
+    border:1px solid white;
+    line-height: 50px;
+}
+
+.box0_top #search{
+    color:gray;
+    display:inline-block;
+    height:30px;
+    width:170px;
+    line-height: 30px;
+    margin-left:10px;
+    border:1px solid white;
+}
+
+.letter{
+    position:relative;
+    top:33vh;
+}
+
+#your{
+    display:inline-block;
+    height:40px;
+    line-height:40px;
+    font-size:30px;
+    font-weight: bold;
+    background-color: white;
+}
+
+#make{
+    position:absolute;
+    top:35px;
+    height:45px;
+    line-height:40px;
+    font-size:30px;
+    font-weight: bold;
+    background-color: rgb(255, 213, 0);
+}
+
+
+.box1{
+    display:block;
+    background-color: white;
+    height:65vh;
+}
+
+
+
+.box1_left{
+    display:inline-block;
+    margin-left:6vw;
+    height:27vh;
+    width:26vw;
+    vertical-align: 18vh;
+    border: 4.5px solid black;
+    box-sizing:border-box;
+    padding-top:4vh;
+    padding-left:2vw;
+    padding-right:2vw;
+}
+
+#box1_head{
+    font-size: 25px;
+    line-height: 55px;
+}
+
+#box1_article{
+    font-size:13px;
+    line-height: 20px;
+}
+
+.box1_right{
+    display:inline-block;
+    background-color: rgb(255, 213, 0);
+    width:35%;
+    height:85%;
+    margin: 50px 0 auto;
+}
+
+.box1_right_img{
+    background-image: url("https://images03.nicepage.com/c461c07a441a5d220e8feb1a/e07fd7349a87546e950fb324/photo1564305564045c62d40dd0123.jpg");
+    height:90%;
+    width:80%;
+    margin-top:3vh;
+    margin-left:6vw;
+    background-size: cover;
+}
+
+.box2{
+    display:block;
+    height:30vh;
+    padding-top:10px;
+}
+
+
+    .box2_img{
+    background-image: url("https://images01.nicepage.com/a2/fc/a2fc4ef890f44fa0a9bb7787ce17008d.jpeg");
+    width:23vw;
+    height:27vh;
+    background-size: cover;
+    display:inline-block;
+    margin-right:10px;
+    }
+
+    .box2_text{
+    border: 4px solid black;
+    box-sizing:border-box;
+    width:23vw;
+    display:inline-block;
+    height:27vh;
+    margin-right:10px;
+    vertical-align: top;
+    padding:30px;
+    }
+
+    .box2_head{
+        font-size:18px;
+        font-weight:400;
+        margin-top:10px;
+        margin-bottom: 20px;
+    }
+
+    .box2_article{
+        font-size:13px;
+        line-height:20px;
+    }
+
+.box2_img2{
+    background-image: url("https://images01.nicepage.com/62/43/6243854162c536333ab218a58996077f.jpeg");
+    width:23vw;
+    height:27vh;
+    background-size: cover;
+    display:inline-block;
+    margin-right:10px;
+    }
+
+    .box3{
+        background-image: url("https://images03.nicepage.com/a1389d7bc73adea1e1c1fb7e/992eb4a786e9521ea39ea995/pexelsphoto940302.jpeg");
+        background-size:cover;
+        height:70vh;
+        background-position:30%;
+    }
+
+    .box3_text{
+        padding-top: 17vh;
+    }
+
+    #time{
+        font-size:28px;
+        line-height:70px;
+    }
+
+    #box3_article{
+        font-size:13px;
+        width:70%;
+    }
+
+    .box4{
+        background-color: white;
+        height:50vh;
+        position:relative;
+    }
+
+    .box4_band{
+        height:22vh;
+        position:relative;
+        top:14vh;
+        background-color: rgb(255, 213, 0);
+    }
+
+    .box4_img{
+        position:absolute;
+        left:4vw;
+        top:40px;
+    }
+    
+    .box4_img1{
+        background-image:url("https://images03.nicepage.com/a1389d7bc73adea1e1c1fb7e/b997f5453a025796b7e011f6/pexelsphoto3659862.jpeg");
+        width:400px;
+        height:350px;
+        background-size: cover;
+        background-position:0 100%;
+        margin-right:15px;
+        display:inline-block;
+    }
+
+    .box4_img2{
+        background-image:url("https://images03.nicepage.com/a1389d7bc73adea1e1c1fb7e/89f0b40da8d05b4088f24d63/pexelsphoto704569.jpeg");
+        width:400px;
+        height:350px;
+        background-size: cover;
+        display:inline-block;
+        background-position: 0 50%;
+    }
+
+    .box5{
+        display:block;
+        height:30vh;
+    }
+    
+    .box5_content{
+        text-align: center;
+    }
+
+    .box5_head{
+        font-size:28px;
+        line-height: 60px;
+    }
+
+    .box5_article{
+        width:50vw;
+        font-size:13px;
+        margin: 0 auto;
+    }
+
+    .read_more{
+        display:inline-block;
+        background-color: black;
+        color:white;
+        margin-top:30px;
+        font-size:12px;
+        font-weight:bold;
+        padding:10px 25px 10px 25px;
+    }
+
+
+    .box6{
+        height:45vh;
+    }
+
+    .box6_img1{
+        display:inline-block;
+        background-image: url("https://images03.nicepage.com/a1389d7bc73adea1e1c1fb7e/e5a2d57a68bc5de4b52746a3/pexelsphoto3756523.jpeg");
+        background-size: cover;
+        width:45vh;
+        height:45vh;
+        margin-right: 10px;
+    }
+
+    .box6_article{
+        display:inline-block;
+        border: 4px solid black;
+        box-sizing:border-box;
+        width:50vh;
+        height:45vh;
+        margin-right: 10px;
+    }
+
+    .box6_article{
+        vertical-align: top;
+        text-align:center;
+        padding: 10vh 10px 10vh 10px;
+    }
+    
+    #box6_article1{
+        font-size:30px;
+    }
+
+    #box6_article2{
+        font-size:14px;
+        letter-spacing:2px;
+    }
+
+    #box6_article3{
+        background-image: url("https://i.imgur.com/gRMzG75.png");
+        background-size:cover;
+        width:50px;
+        height:50px;
+    }
+
+    #box6_article4{
+        font-size:13px;
+        padding: 0 15px 10px 15px;
+        line-height:23px;
+
+    }
+
+    .box6_img2{
+        display:inline-block;
+        background-image: url("https://images03.nicepage.com/a1389d7bc73adea1e1c1fb7e/fcee991985085d4093370a3d/pexelsphoto3756525.jpeg");
+        background-size:cover;
+        background-position: 30%;
+        width:47vh;
+        height:45vh;
+    }
+
+    .box7{
+        margin-top:40px;
+        background-image: url("https://images03.nicepage.com/a1389d7bc73adea1e1c1fb7e/3cb19967a4645debbcf2c90a/pexelsphoto3831823.jpeg");
+        height:70vh;
+        background-size: cover;
+        text-align: center;
+    }
+
+    .box7_text{
+        padding-top:60vh;
+        font-size:30px;
+    }
+
+    .box_foot{
+        height:25vh;
+        background-color: rgb(56, 56, 56);
+    }
+
+    .sample_text{
+        font-size:11px;
+        color:white;
+        width:30vw;
+        margin: 0 auto;
+        text-align: center;
+        padding-top:5vh;
+    }
+    </style>
 </head>
 <body>
     <div class="contents">
