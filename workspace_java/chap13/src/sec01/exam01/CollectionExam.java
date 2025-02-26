@@ -1,6 +1,7 @@
 package sec01.exam01;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class CollectionExam {
@@ -30,6 +31,12 @@ public class CollectionExam {
 		// 초기화
 //		list.clear();
 		list = new ArrayList(); // 보통 이 방법을 주로 사용
+		
+		map = new HashMap();
+		map.put("제목", "바람이 분다");
+		map.put("가수", "이소라");
+		list.add(map);
+		
 		
 		
 		
