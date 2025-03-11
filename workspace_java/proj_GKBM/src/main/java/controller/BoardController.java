@@ -21,41 +21,67 @@ public class BoardController extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		
+		// board 접속 시, 목록 - 새글 작성 - 상세 보기 구분이 필요하다.
+		// action 파라미터를 주어 확인하자.
+		
+		String action = request.getParameter("action");
 		BoardDAO boardDAO = new BoardDAO();
-		List resultList = boardDAO.selectBoard();
 		
-		request.setAttribute("resultList", resultList);
+		// 새글 작성 요청
+		if ("form".equals(action)) {
+			request.getRequestDispatcher("/WEB-INF/views/form.jsp").forward(request, response);
+		}
 		
-		String url = "/WEB-INF/views/board_list.jsp";
-		request.getRequestDispatcher(url).forward(request, response);
+		// 게시글 상세 보기
+		else if ("detail".equals(action)) {
+			
+			int boardId = Integer.parseInt(request.getParameter("boardId"));
+			
+			BoardDTO board = boardDAO.getBoardDetail(boardId);
+			request.setAttribute("board", board);
+			
+			request.getRequestDispatcher("/WEB-INF/views/board_detail.jsp").forward(request, response);
+		}
+		
+		else {
+			// 게시글 목록 가져오기
+			List resultList = boardDAO.selectBoard();
+			
+			// JSP에서 사용할 수 있게 request에 저장
+			request.setAttribute("resultList", resultList);
+			
+			// 게시판 목록 페이지로 이동
+			String url = "/WEB-INF/views/board_list.jsp";
+			request.getRequestDispatcher(url).forward(request, response);
+		}
+		
 	}
 
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
-		response.setContentType("text/html; charset=urf-8");
+		response.setContentType("text/html; charset=utf-8");
 		
 		String command = request.getParameter("command");
 		System.out.println("command : "+ command);
 		if("update".equals(command)) {
 			// update 장소
 			
+			System.out.println("변수가 문제임?");
+			
 			int boardId = Integer.parseInt(request.getParameter("boardId"));
-			String title = request.getParameter("title");
-			String boardContent = request.getParameter("content");
-			int notice = Integer.parseInt(request.getParameter("notice"));
+			
+			
 			
 			BoardDTO boardDTO = new BoardDTO();
 			boardDTO.setBoardId(boardId);
-			boardDTO.setTitle(title);
-			boardDTO.setBoardContent(boardContent);
-			boardDTO.setNotice(notice);
 			
 			BoardDAO boardDAO = new BoardDAO();
 			int result = boardDAO.updateBoard(boardDTO);
 			System.out.println("result : "+ result);
 			
-		} else {
+		} else if ("insert".equals(command)) {
 			// insert 장소
 			// jsp에서 보낸 title을 가져와서, String title 변수에 저장.
 			
@@ -82,6 +108,17 @@ public class BoardController extends HttpServlet {
 			
 			// DB에 DTO 값을 삽입한다.
 			
+		} else if ("delete".equals(command)) {
+			
+			int boardId = Integer.parseInt(request.getParameter("board_id"));
+			
+			BoardDTO boardDTO = new BoardDTO();
+			boardDTO.setBoardId(boardId);
+			
+			BoardDAO boardDAO = new BoardDAO();
+			int result = boardDAO.deleteBoard(boardDTO);
+			System.out.println("result : "+ result);
+		
 		}
 		
 		String url = "board";

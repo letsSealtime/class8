@@ -24,7 +24,7 @@ public class BoardDAO {
 			Connection con = ds.getConnection();
 
 			// [SQL 준비]
-			String 	query =  " insert into p_board ";
+			String 	query =  " insert into P_BOARD ";
 					query += " values ( seq_p_board.nextval, ?, ?, ?, ?, sysdate, null, 0 )";
 			PreparedStatement ps = con.prepareStatement(query);
 			
@@ -58,7 +58,7 @@ public class BoardDAO {
 			Connection con = ds.getConnection();
 
 			// [SQL 준비]
-			String 	query =  " select * from p_board ";
+			String 	query =  " select * from P_BOARD ";
 			PreparedStatement ps = con.prepareStatement(query);
 
 			// [SQL 실행] 및 [결과 확보]
@@ -70,8 +70,8 @@ public class BoardDAO {
 				dto.setTitle(rs.getString("title"));
 				dto.setBoardContent(rs.getString("board_content"));
 				dto.setNotice(rs.getInt("notice"));
-				dto.setCreateDate(rs.getDate("create_date"));
-				dto.setReserveDate(rs.getDate("reserve_date"));
+				dto.setCreateDate(rs.getDate("create_Date"));
+				dto.setReserveDate(rs.getDate("reserve_Date"));
 				dto.setViews(rs.getInt("views"));
 				
 				list.add(dto);
@@ -98,7 +98,7 @@ public class BoardDAO {
 			Connection con = ds.getConnection();
 
 			// [SQL 준비]
-			String 	query =  " update p_board ";
+			String 	query =  " update P_BOARD ";
 					query += " set title = ?, boardContent = ?, ";
 					
 					if(boardDTO.getReserveDate() != null) {
@@ -139,8 +139,8 @@ public class BoardDAO {
 			Connection con = ds.getConnection();
 
 			// [SQL 준비]
-			String 	query =  " delete from p_board ";
-					query += " where boardId = ? ";
+			String 	query =  " delete from P_BOARD ";
+					query += " where board_Id = ? ";
 			PreparedStatement ps = con.prepareStatement(query);
 			
 			// 첫번째 물음표에 값을 넣어달라
@@ -156,6 +156,45 @@ public class BoardDAO {
 		
 		}
 	
+	
+	public BoardDTO getBoardDetail(int boardId) {
+			BoardDTO boardDTO = null;
+		
+		try {
+			// [DB 접속] 시작
+			Context ctx = new InitialContext();
+			DataSource ds = (DataSource) ctx.lookup("java:/comp/env/jdbc/oracle");
+			Connection con = ds.getConnection();
+
+			// [SQL 준비]
+			String 	query =  " select * from P_BOARD ";
+					query += " where boardId = ? ";
+			PreparedStatement ps = con.prepareStatement(query);
+			
+			// 첫번째 물음표에 값을 넣어달라
+			ps.setInt(1, boardId);
+			ResultSet rs = ps.executeQuery();
+			
+		
+			if(rs.next()) {
+	            boardDTO = new BoardDTO();
+	            boardDTO.setBoardId(rs.getInt("board_id"));
+	            boardDTO.setEmpno(rs.getInt("empno"));
+	            boardDTO.setTitle(rs.getString("title"));
+	            boardDTO.setBoardContent(rs.getString("content"));
+	            boardDTO.setNotice(rs.getInt("notice"));
+	            boardDTO.setCreateDate(rs.getDate("create_date"));
+	            boardDTO.setViews(rs.getInt("views"));
+	            
+			}
+			
+			con.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return boardDTO;
+		}
 	
 	
 }

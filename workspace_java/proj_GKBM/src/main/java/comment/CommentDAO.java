@@ -1,0 +1,150 @@
+package comment;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.sql.DataSource;
+
+
+public class CommentDAO {
+
+	public int insertComment(CommentDTO commentDTO) {
+		System.out.println("insertComment 실행");
+		int result = -1;
+		
+		try {
+			// [DB 접속] 시작
+			Context ctx = new InitialContext();
+			DataSource ds = (DataSource) ctx.lookup("java:/comp/env/jdbc/oracle");
+			Connection con = ds.getConnection();
+
+			// [SQL 준비]
+			String 	query =  " insert into p_comment ";
+					query += " values ( seq_p_comment.nextval, ?, ?, sysdate )";
+			PreparedStatement ps = con.prepareStatement(query);
+			
+			ps.setInt(1, commentDTO.getBoardId());
+			ps.setString(2, commentDTO.getContent());
+
+			// [SQL 실행] 및 [결과 확보]
+			result = ps.executeUpdate();
+
+			con.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return result;
+	}
+	
+	
+	public List selectComment(){
+		System.out.println("selectComment 실행");
+		List list = new ArrayList();
+
+		
+		try {
+			Context ctx = new InitialContext();
+			DataSource ds = (DataSource) ctx.lookup("java:/comp/env/jdbc/oracle");
+			Connection con = ds.getConnection();
+
+			// [SQL 준비]
+			String 	query =  " select * from p_comment ";
+			PreparedStatement ps = con.prepareStatement(query);
+
+			// [SQL 실행] 및 [결과 확보]
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()) {
+				CommentDTO dto = new CommentDTO();
+				dto.setCommentId(rs.getInt("commentId"));
+				dto.setBoardId(rs.getInt("boardId"));
+				dto.setContent(rs.getString("content"));
+				dto.setCreateDate(rs.getDate("createDate"));
+				
+				
+				list.add(dto);
+			}
+
+			con.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		
+		return list;
+	}
+	
+	public int updateComment(CommentDTO commentDTO) {
+		System.out.println("updateComment 실행");
+		int result = -1;
+		
+		try {
+			// [DB 접속] 시작
+			Context ctx = new InitialContext();
+			DataSource ds = (DataSource) ctx.lookup("java:/comp/env/jdbc/oracle");
+			Connection con = ds.getConnection();
+
+			// [SQL 준비]
+			String 	query =  " update p_comment ";
+					query += " set content = ? ";
+					query += " where comment_id = ? ";
+					PreparedStatement ps = con.prepareStatement(query);
+					 
+			// 물음표에 값을 넣어달라
+			ps.setString(1, commentDTO.getContent());
+			ps.setInt(2, commentDTO.getCommentId());
+			
+			// [SQL 실행] 및 [결과 확보]
+			result = ps.executeUpdate();
+
+			con.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return result;
+	}
+	
+	
+	public int deleteComment(CommentDTO commentDTO) {
+		System.out.println("deleteComment 실행");
+		int result = -1;
+		
+		try {
+			// [DB 접속] 시작
+			Context ctx = new InitialContext();
+			DataSource ds = (DataSource) ctx.lookup("java:/comp/env/jdbc/oracle");
+			Connection con = ds.getConnection();
+
+			// [SQL 준비]
+			String 	query =  " delete from p_comment ";
+					query += " where commenId = ? ";
+			PreparedStatement ps = con.prepareStatement(query);
+			
+			// 첫번째 물음표에 값을 넣어달라
+			ps.setInt(1, commentDTO.getCommentId());
+			
+			// [SQL 실행] 및 [결과 확보]
+			result = ps.executeUpdate();
+
+			con.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return result;
+		
+		}
+	
+	
+	
+	
+	
+	
+	
+}
