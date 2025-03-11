@@ -68,10 +68,7 @@ public class BoardController extends HttpServlet {
 		if("update".equals(command)) {
 			// update 장소
 			
-			System.out.println("변수가 문제임?");
-			
 			int boardId = Integer.parseInt(request.getParameter("boardId"));
-			
 			
 			
 			BoardDTO boardDTO = new BoardDTO();

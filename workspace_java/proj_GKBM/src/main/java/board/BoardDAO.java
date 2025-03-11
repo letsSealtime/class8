@@ -168,7 +168,7 @@ public class BoardDAO {
 
 			// [SQL 준비]
 			String 	query =  " select * from P_BOARD ";
-					query += " where boardId = ? ";
+					query += " where board_Id = ? ";
 			PreparedStatement ps = con.prepareStatement(query);
 			
 			// 첫번째 물음표에 값을 넣어달라

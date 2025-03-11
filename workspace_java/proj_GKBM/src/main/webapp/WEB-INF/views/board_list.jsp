@@ -21,7 +21,6 @@
 				<th>작성일</th>
 				<th>조회수</th>
 				<th>댓글</th>
-				<th>수정</th>
 				<th>삭제</th>
 			</tr>
 		</thead>
@@ -50,17 +49,8 @@
 					<!-- 조회수 -->
 					<td>${dto.views}</td>
 
-					<!-- 댓글 개수 -->
 
-					<!-- 수정 버튼 -->
-					<td>
-						<form method="post" action="board?action=form">
-							<input type="hidden" name="command" value="update">
-							<input type="hidden" name="boardId" value="${dto.boardId}">
-							<input type="submit" value="수정"
-								style="border-radius: 4px; background-color: #28a745; color: white; border: none">
-						</form>
-					</td>
+					<td></td>
 
 					<!-- 삭제 버튼 -->
 					<td>
