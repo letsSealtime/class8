@@ -69,10 +69,15 @@ public class BoardController extends HttpServlet {
 			// update 장소
 			
 			int boardId = Integer.parseInt(request.getParameter("boardId"));
-			
+			String title = request.getParameter("title");
+			String boardContent = request.getParameter("content");
+			int notice = Integer.parseInt(request.getParameter("notice"));
 			
 			BoardDTO boardDTO = new BoardDTO();
 			boardDTO.setBoardId(boardId);
+			boardDTO.setTitle(title);
+	        boardDTO.setBoardContent(boardContent);
+	        boardDTO.setNotice(notice);
 			
 			BoardDAO boardDAO = new BoardDAO();
 			int result = boardDAO.updateBoard(boardDTO);
