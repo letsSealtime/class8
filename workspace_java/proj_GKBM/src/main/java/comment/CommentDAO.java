@@ -25,10 +25,11 @@ public class CommentDAO {
 
 			// [SQL 준비]
 			String 	query =  " insert into p_comment ";
-					query += " values ( seq_p_comment.nextval, ?, ?, sysdate )";
+					query += " values ( seq_p_comment.nextval, ?, ?, ?, sysdate )";
 			PreparedStatement ps = con.prepareStatement(query);
 			
 			ps.setInt(1, commentDTO.getBoardId());
+			ps.setInt(1, commentDTO.getEmpno());
 			ps.setString(2, commentDTO.getContent());
 
 			// [SQL 실행] 및 [결과 확보]
@@ -61,10 +62,10 @@ public class CommentDAO {
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()) {
 				CommentDTO dto = new CommentDTO();
-				dto.setCommentId(rs.getInt("commentId"));
-				dto.setBoardId(rs.getInt("boardId"));
+				dto.setCommentId(rs.getInt("comment_Id"));
+				dto.setBoardId(rs.getInt("board_Id"));
 				dto.setContent(rs.getString("content"));
-				dto.setCreateDate(rs.getDate("createDate"));
+				dto.setCreateDate(rs.getDate("create_Date"));
 				
 				
 				list.add(dto);
@@ -123,7 +124,7 @@ public class CommentDAO {
 
 			// [SQL 준비]
 			String 	query =  " delete from p_comment ";
-					query += " where commenId = ? ";
+					query += " where commen_Id = ? ";
 			PreparedStatement ps = con.prepareStatement(query);
 			
 			// 첫번째 물음표에 값을 넣어달라

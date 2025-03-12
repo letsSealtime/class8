@@ -22,7 +22,9 @@
 </table>
 
 <br>
+
 <a href="board?action=form&boardId=${board.boardId}">수정하기</a>
+
 <a href="board">목록으로</a>
 
 </body>

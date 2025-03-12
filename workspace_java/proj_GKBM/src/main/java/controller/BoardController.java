@@ -30,7 +30,18 @@ public class BoardController extends HttpServlet {
 		
 		// 새글 작성 요청
 		if ("form".equals(action)) {
+			String boardIdStr = request.getParameter("boardId");
+				
+			if (boardIdStr != null) {
+				
+				int boardId = Integer.parseInt(boardIdStr);
+				BoardDTO boardDTO = boardDAO.getBoardDetail(boardId);
+				request.setAttribute("boardDTO", boardDTO);
+			}
+			
+			// 새글 작성으로 이동
 			request.getRequestDispatcher("/WEB-INF/views/form.jsp").forward(request, response);
+			
 		}
 		
 		// 게시글 상세 보기

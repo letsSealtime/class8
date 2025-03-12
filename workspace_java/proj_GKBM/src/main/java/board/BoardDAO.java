@@ -88,7 +88,6 @@ public class BoardDAO {
 	
 	public int updateBoard(BoardDTO boardDTO) {
 		System.out.println("updateBoard 실행");
-		System.out.println(boardDTO);
 		int result = -1;
 		
 		try {
@@ -99,22 +98,15 @@ public class BoardDAO {
 
 			// [SQL 준비]
 			String 	query =  " update P_BOARD ";
-					query += " set title = ?, boardContent = ?, ";
-					
-					if(boardDTO.getReserveDate() != null) {
-						query += " reserveDate = ? ";
-						
-					} else {
-						query += " reserveDate = sysdate ";
-					}
-					query += " where boardId = ? ";
+					query += " set title = ?, board_Content = ?, notice = ?, reserve_Date = sysdate  ";
+					query += " where board_Id = ? ";
 					
 			PreparedStatement ps = con.prepareStatement(query);
 			// 물음표에 값을 넣어달라
 			
 			ps.setString(1, boardDTO.getTitle());
 			ps.setString(2, boardDTO.getBoardContent());
-			ps.setDate(3, boardDTO.getReserveDate());
+			ps.setInt(3, boardDTO.getNotice());
 			ps.setInt(4, boardDTO.getBoardId());
 
 			result = ps.executeUpdate();
@@ -181,7 +173,7 @@ public class BoardDAO {
 	            boardDTO.setBoardId(rs.getInt("board_id"));
 	            boardDTO.setEmpno(rs.getInt("empno"));
 	            boardDTO.setTitle(rs.getString("title"));
-	            boardDTO.setBoardContent(rs.getString("content"));
+	            boardDTO.setBoardContent(rs.getString("board_content"));
 	            boardDTO.setNotice(rs.getInt("notice"));
 	            boardDTO.setCreateDate(rs.getDate("create_date"));
 	            boardDTO.setViews(rs.getInt("views"));
