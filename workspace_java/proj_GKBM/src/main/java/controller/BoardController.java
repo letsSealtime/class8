@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import board.BoardDAO;
 import board.BoardDTO;
+import comment.CommentDAO;
+import comment.CommentDTO;
 
 
 @WebServlet("/board")
@@ -48,9 +50,15 @@ public class BoardController extends HttpServlet {
 		else if ("detail".equals(action)) {
 			
 			int boardId = Integer.parseInt(request.getParameter("boardId"));
-			
 			BoardDTO board = boardDAO.getBoardDetail(boardId);
+			
+			
+			CommentDTO commentDTO = new CommentDTO();
+			CommentDAO commentDAO = new CommentDAO();
+			List resultList = commentDAO.selectComment(boardId);
+			
 			request.setAttribute("board", board);
+			request.setAttribute("resultList", resultList);
 			
 			request.getRequestDispatcher("/WEB-INF/views/board_detail.jsp").forward(request, response);
 		}

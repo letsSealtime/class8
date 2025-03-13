@@ -10,6 +10,8 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
+import board.BoardDTO;
+
 
 public class CommentDAO {
 
@@ -25,11 +27,11 @@ public class CommentDAO {
 
 			// [SQL 준비]
 			String 	query =  " insert into p_comment ";
-					query += " values ( seq_p_comment.nextval, ?, ?, ?, sysdate )";
+					query += " values ( seq_p_comment.nextval, 1, ?, ?, sysdate )";
 			PreparedStatement ps = con.prepareStatement(query);
 			
+//			ps.setInt(1, commentDTO.getEmpno());
 			ps.setInt(1, commentDTO.getBoardId());
-			ps.setInt(1, commentDTO.getEmpno());
 			ps.setString(2, commentDTO.getContent());
 
 			// [SQL 실행] 및 [결과 확보]
@@ -44,7 +46,7 @@ public class CommentDAO {
 	}
 	
 	
-	public List selectComment(){
+	public List selectComment(int boardId){
 		System.out.println("selectComment 실행");
 		List list = new ArrayList();
 
@@ -55,20 +57,27 @@ public class CommentDAO {
 			Connection con = ds.getConnection();
 
 			// [SQL 준비]
-			String 	query =  " select * from p_comment ";
+			String 	query =  " select c.comment_id, c.board_id, c.empno, e.emp_id as WriterName, c.content, c.create_date ";
+					query += " from p_comment c ";
+					query += " join p_emp e ON c.empno = e.empno ";
+					query += " where c.board_ID = ? ";
+			
 			PreparedStatement ps = con.prepareStatement(query);
-
+			ps.setInt(1, boardId);
+			
 			// [SQL 실행] 및 [결과 확보]
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()) {
-				CommentDTO dto = new CommentDTO();
-				dto.setCommentId(rs.getInt("comment_Id"));
-				dto.setBoardId(rs.getInt("board_Id"));
-				dto.setContent(rs.getString("content"));
-				dto.setCreateDate(rs.getDate("create_Date"));
+				CommentDTO comment = new CommentDTO();
+				comment.setCommentId(rs.getInt("comment_Id"));
+				comment.setEmpno(rs.getInt("empno"));
+				comment.setWriterName(rs.getString("writerName"));
+				comment.setBoardId(rs.getInt("board_Id"));
+				comment.setContent(rs.getString("content"));
+				comment.setCreateDate(rs.getDate("create_Date"));
 				
 				
-				list.add(dto);
+				list.add(comment);
 			}
 
 			con.close();
