@@ -35,7 +35,7 @@ public class CommentController extends HttpServlet {
 		request.setAttribute("resultList", resultList);
 		
 		// 게시글 상세 페이지로 이동
-		String url = "/WEB-INF/views/board_detail.jsp";
+		String url = "board?action=detail&boardId=" + boardId;
 		request.getRequestDispatcher(url).forward(request, response);
 		
 		
@@ -45,10 +45,13 @@ public class CommentController extends HttpServlet {
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
-		response.setContentType("text/html; charset=urf-8");
+		response.setContentType("text/html; charset=utf-8");
 		
 		String command = request.getParameter("command");
 		System.out.println("command : "+ command);
+		
+		int boardId = Integer.parseInt(request.getParameter("boardId"));
+		System.out.println(boardId);
 		
 		if("update".equals(command)) {
 			// update 장소
@@ -68,7 +71,6 @@ public class CommentController extends HttpServlet {
 			// insert 장소
 			
 //			int empno = Integer.parseInt(request.getParameter("empno"));
-			int boardId = Integer.parseInt(request.getParameter("boardId"));
 			String content = request.getParameter("content");
 			
 			CommentDTO commentDTO = new CommentDTO();
@@ -94,7 +96,7 @@ public class CommentController extends HttpServlet {
 		
 		}
 		
-		String url = "comment";
+		String url = "board?action=detail&boardId=" + boardId;
 		response.sendRedirect(url);
 	}
 		

@@ -24,7 +24,7 @@ public class BoardDAO {
 			Connection con = ds.getConnection();
 
 			// [SQL 준비]
-			String 	query =  " insert into P_BOARD ";
+			String 	query =  " insert into P_BOARD (Board_id, empno, title, board_content, notice, create_date, reserve_date, views )";
 					query += " values ( seq_p_board.nextval, ?, ?, ?, ?, sysdate, null, 0 )";
 			PreparedStatement ps = con.prepareStatement(query);
 			
@@ -149,6 +149,41 @@ public class BoardDAO {
 		}
 	
 	
+	public int viewsUpdateBoard(int boardId) {
+		System.out.println("viewsUpdateBoard 실행");
+		int result = -1;
+		
+		try {
+			// [DB 접속] 시작
+			Context ctx = new InitialContext();
+			DataSource ds = (DataSource) ctx.lookup("java:/comp/env/jdbc/oracle");
+			Connection con = ds.getConnection();
+
+			// [SQL 준비]
+			String 	query =  " update P_BOARD ";
+					query += " set views = (select views+1 from p_board ";
+					query += " 				where board_id = ?) ";
+					query += " where board_Id = ?  ";
+					
+			PreparedStatement ps = con.prepareStatement(query);
+			// 물음표에 값을 넣어달라
+			
+			ps.setInt(1, boardId);
+			ps.setInt(2, boardId);
+			
+			
+			result = ps.executeUpdate();
+			con.close();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return result;
+	}
+	
+	
+	
 	public BoardDTO getBoardDetail(int boardId) {
 			BoardDTO boardDTO = null;
 		
@@ -161,6 +196,7 @@ public class BoardDAO {
 			// [SQL 준비]
 			String 	query =  " select * from P_BOARD ";
 					query += " where board_Id = ? ";
+					
 			PreparedStatement ps = con.prepareStatement(query);
 			
 			// 첫번째 물음표에 값을 넣어달라

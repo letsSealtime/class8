@@ -36,13 +36,12 @@
 	<table border="1">
 		<c:forEach var="comment" items="${resultList}">
 			<tr>
-				<td type="hidden">${comment.commentId}</td>
 				
 				<!--  ID -->
 				<td>${comment.writerName}</td>
 
 				<!-- 덧글 내용 -->
-				<td>${comment.content}></td>
+				<td>${comment.content}</td>
 
 				<!-- 작성일 -->
 				<td>${comment.createDate}</td>
@@ -52,16 +51,16 @@
 				<form action="comment" method="post">
 				<input type="hidden" name="command" value="update">
 				<input type="hidden" name="commentId" value="${comment.commentId}">
-				<input type="hidden" name="boardId" value="${comment.boardId}">
+				<input type="hidden" name="boardId" value="${board.boardId}">
 				<input type="text" name="content" value="${comment.content}">
 				<input type="submit" value="수정">
 				</form>
 				</td>
 				
 				<td>
-				<form>
 				<form action="comment" method="post">
 				<input type="hidden" name="command" value="delete">
+				<input type="hidden" name="boardId" value="${board.boardId}">
 				<input type="hidden" name="commentId" value="${comment.commentId}">
 				<input type="submit" value="삭제">
 				</form>

@@ -50,9 +50,14 @@ public class BoardController extends HttpServlet {
 		else if ("detail".equals(action)) {
 			
 			int boardId = Integer.parseInt(request.getParameter("boardId"));
+			
+			// 조회수 메소드
+			boardDAO.viewsUpdateBoard(boardId);
+			
+			// 상세보기 메소드
 			BoardDTO board = boardDAO.getBoardDetail(boardId);
-			
-			
+
+			// 덧글 메소드 영역
 			CommentDTO commentDTO = new CommentDTO();
 			CommentDAO commentDAO = new CommentDAO();
 			List resultList = commentDAO.selectComment(boardId);
@@ -101,6 +106,11 @@ public class BoardController extends HttpServlet {
 			BoardDAO boardDAO = new BoardDAO();
 			int result = boardDAO.updateBoard(boardDTO);
 			System.out.println("result : "+ result);
+			
+			 String url = "board?action=detail&boardId=" + boardId;
+			 response.sendRedirect(url);
+			 
+			 return;
 			
 		} else if ("insert".equals(command)) {
 			// insert 장소

@@ -26,7 +26,7 @@ public class CommentDAO {
 			Connection con = ds.getConnection();
 
 			// [SQL 준비]
-			String 	query =  " insert into p_comment ";
+			String 	query =  " insert into p_comment ( comment_id, empno, board_id, content, create_date )";
 					query += " values ( seq_p_comment.nextval, 1, ?, ?, sysdate )";
 			PreparedStatement ps = con.prepareStatement(query);
 			
@@ -133,7 +133,7 @@ public class CommentDAO {
 
 			// [SQL 준비]
 			String 	query =  " delete from p_comment ";
-					query += " where commen_Id = ? ";
+					query += " where comment_Id = ? ";
 			PreparedStatement ps = con.prepareStatement(query);
 			
 			// 첫번째 물음표에 값을 넣어달라
