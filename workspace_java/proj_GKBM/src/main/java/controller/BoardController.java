@@ -135,6 +135,11 @@ public class BoardController extends HttpServlet {
 			
 			BoardDAO boardDAO = new BoardDAO();
 			int result = boardDAO.insertBoard(boardDTO);
+			
+			
+			// 파일 첨부하기
+			
+			
 			System.out.println("result : "+ result);
 			
 			// DB에 DTO 값을 삽입한다.

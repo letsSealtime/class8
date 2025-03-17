@@ -41,6 +41,8 @@
                 </select>
             </td>
         </tr>
+        
+        
     </table>
 
     <br>
@@ -48,8 +50,23 @@
     <a href="board">목록으로</a>
 </form>
 
+	<table>
+		<tr>
+			<th>파일첨부</th>
+			<td>
+				<form action="boardFile" method="post"
+					enctype="multipart/form-data">
+					<input type="hidden" name="boardId" value="${boardDTO.boardId}">
+					<input type="file" name="fileName">
+					<input type="submit" value="업로드">
+				</form>
+			</td>
+		</tr>
+	</table>
 
-<c:if test="${boardDTO != null}">
+
+
+	<c:if test="${boardDTO != null}">
     <form action="board" method="post">
         <input type="hidden" name="command" value="delete">
         <input type="hidden" name="boardId" value="${boardDTO.boardId}">
