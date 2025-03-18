@@ -1,7 +1,7 @@
 package controller;
 
+import java.io.File;
 import java.io.IOException;
-import java.sql.Date;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -10,8 +10,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileUploadException;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
+
 import board.BoardDAO;
 import board.BoardDTO;
+import boardFile.BoardFileDAO;
+import boardFile.BoardFileDTO;
 import comment.CommentDAO;
 import comment.CommentDTO;
 
@@ -86,6 +93,45 @@ public class BoardController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html; charset=utf-8");
+
+		
+		try {
+			// File : 파일 또는 디렉토리(폴더)를 관리하는 class
+			File currentDirPath = new File("C:\\temp\\upload");
+
+			// 세팅
+			DiskFileItemFactory factory = new DiskFileItemFactory();
+			factory.setRepository(currentDirPath); // 경로 지정
+			factory.setSizeThreshold(1024 * 1024); // 임시 파일의 크기를 byte단위로
+
+			ServletFileUpload upload = new ServletFileUpload(factory);
+			// 업로드 파일의 최대 크기 지정
+			upload.setFileSizeMax(1024 * 1024 * 100); // 100 메가 바이트 100MB
+
+			
+			List<FileItem> items = upload.parseRequest(request);
+		
+for (int i = 0; i < items.size(); i++) {
+				
+				FileItem fileItem = (FileItem) items.get(i);
+				
+				if (fileItem.isFormField()) {
+					
+					
+					
+				}
+				
+
+}
+		
+		
+		} catch (FileUploadException e) {
+			e.printStackTrace();
+		}
+		
+		
+		
+		
 		
 		String command = request.getParameter("command");
 		System.out.println("command : "+ command);
@@ -136,13 +182,18 @@ public class BoardController extends HttpServlet {
 			BoardDAO boardDAO = new BoardDAO();
 			int result = boardDAO.insertBoard(boardDTO);
 			
-			
 			// 파일 첨부하기
+			// DTO로 boardID 전달
 			
+			if(result > 0) {
+				
+			request.setAttribute("boardId", result);
+		    request.getRequestDispatcher("file?action=upload").forward(request, response);	
+				
+			}
 			
-			System.out.println("result : "+ result);
+			System.out.println("작성된 boardId : "+ result);
 			
-			// DB에 DTO 값을 삽입한다.
 			
 		} else if ("delete".equals(command)) {
 			
