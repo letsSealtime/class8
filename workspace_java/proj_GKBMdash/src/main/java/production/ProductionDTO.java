@@ -4,15 +4,23 @@ import java.sql.Date;
 
 public class ProductionDTO {
 	
-	Date productionDate;
+	int productionId;
+	String productionDate;
 	int quantity;
-	int factoryId;
 	int workOrderId;
+	int weekPlanId;
+	String unit;
 	
-	public Date getProductionDate() {
+	public int getProductionId() {
+		return productionId;
+	}
+	public void setProductionId(int productionId) {
+		this.productionId = productionId;
+	}
+	public String getProductionDate() {
 		return productionDate;
 	}
-	public void setProductionDate(Date productionDate) {
+	public void setProductionDate(String productionDate) {
 		this.productionDate = productionDate;
 	}
 	public int getQuantity() {
@@ -21,17 +29,25 @@ public class ProductionDTO {
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
-	public int getFactoryId() {
-		return factoryId;
-	}
-	public void setFactoryId(int factoryId) {
-		this.factoryId = factoryId;
-	}
 	public int getWorkOrderId() {
 		return workOrderId;
 	}
 	public void setWorkOrderId(int workOrderId) {
 		this.workOrderId = workOrderId;
 	}
+	public int getWeekPlanId() {
+		return weekPlanId;
+	}
+	public void setWeekPlanId(int weekPlanId) {
+		this.weekPlanId = weekPlanId;
+	}
+	public String getUnit() {
+		return unit;
+	}
+	public void setUnit(String unit) {
+		this.unit = unit;
+	}
+	
+	
 	
 }

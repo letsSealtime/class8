@@ -10,13 +10,15 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
+import boardFile.BoardFileDTO;
+
 
 public class BoardDAO {
 
 	public int insertBoard(BoardDTO boardDTO) {
 		System.out.println("insertBoard 실행");
 		int result = -1;
-		int generatedBoardId = -1;
+		int boardId = -1;
 		
 		try {
 			// [DB 접속] 시작
@@ -24,40 +26,33 @@ public class BoardDAO {
 			DataSource ds = (DataSource) ctx.lookup("java:/comp/env/jdbc/oracle");
 			Connection con = ds.getConnection();
 
-			// [SQL 준비]
-			String 	query =  " insert into P_BOARD (Board_id, empno, title, board_content, notice, create_date, reserve_date, views )";
-					query += " values ( seq_p_board.nextval, ?, ?, ?, ?, sysdate, null, 0 )";
-			PreparedStatement ps = con.prepareStatement(query);
-			
+			String insertQuery = "INSERT INTO P_BOARD (board_id, empno, title, board_content, notice, create_date, reserve_date, views) "
+					+ "VALUES (seq_p_board.NEXTVAL, ?, ?, ?, ?, sysdate, null, 0)";
+			PreparedStatement ps = con.prepareStatement(insertQuery);
 			ps.setInt(1, boardDTO.getEmpno());
 			ps.setString(2, boardDTO.getTitle());
 			ps.setString(3, boardDTO.getBoardContent());
 			ps.setInt(4, boardDTO.getNotice());
 
-			// [SQL 실행] 및 [결과 확보]
-			// int executeUpdate() : select 외 모든 것
-			// int에는 영향받은 줄의 수
 			result = ps.executeUpdate();
-			System.out.println(result);
 			
-			// boardId 결과 받아오기, Resultset에 저장.
 			if (result > 0) {
-				ResultSet rs = ps.getGeneratedKeys();
-				if(rs.next()) {
-					generatedBoardId = rs.getInt(1);
+				String selectQuery = "SELECT board_id FROM P_BOARD WHERE rownum = 1 ORDER BY board_id DESC";
+				PreparedStatement ps2 = con.prepareStatement(selectQuery);
+				ResultSet rs = ps2.executeQuery();
+
+				if (rs.next()) {
+					boardId = rs.getInt("board_id");
 				}
-				
 			}
-			
 
 			con.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
-		return generatedBoardId;
+		return boardId;
 	}
-	
 	
 	public List selectBoard(){
 		System.out.println("selectBoard 실행");

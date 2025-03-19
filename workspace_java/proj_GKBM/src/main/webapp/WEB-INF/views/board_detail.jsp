@@ -32,11 +32,11 @@
 		<textarea name="content"></textarea>
 		<input type="submit" name="comment" value="덧글등록">
 	</form>
-	
+
 	<table border="1">
 		<c:forEach var="comment" items="${resultList}">
 			<tr>
-				
+
 				<!--  ID -->
 				<td>${comment.writerName}</td>
 
@@ -45,28 +45,34 @@
 
 				<!-- 작성일 -->
 				<td>${comment.createDate}</td>
-				
+
 				<!-- 수정버튼 -->
 				<td>
-				<form action="comment" method="post">
-				<input type="hidden" name="command" value="update">
-				<input type="hidden" name="commentId" value="${comment.commentId}">
-				<input type="hidden" name="boardId" value="${board.boardId}">
-				<input type="text" name="content" value="${comment.content}">
-				<input type="submit" value="수정">
-				</form>
+					<form action="comment" method="post">
+						<input type="hidden" name="command" value="update"> <input
+							type="hidden" name="commentId" value="${comment.commentId}">
+						<input type="hidden" name="boardId" value="${board.boardId}">
+						<input type="text" name="content" value="${comment.content}">
+						<input type="submit" value="수정">
+					</form>
 				</td>
-				
+
 				<td>
-				<form action="comment" method="post">
-				<input type="hidden" name="command" value="delete">
-				<input type="hidden" name="boardId" value="${board.boardId}">
-				<input type="hidden" name="commentId" value="${comment.commentId}">
-				<input type="submit" value="삭제">
-				</form>
+					<form action="comment" method="post">
+						<input type="hidden" name="command" value="delete"> <input
+							type="hidden" name="boardId" value="${board.boardId}"> <input
+							type="hidden" name="commentId" value="${comment.commentId}">
+						<input type="submit" value="삭제">
+					</form>
 				</td>
 			</tr>
 		</c:forEach>
+		<tr>
+			<th>첨부파일</th>
+			<td><c:forEach var="file" items="${fileList}">
+					<a href="file?action=download&fileName=${file.fileName}">${file.fileName}</a>
+				</c:forEach></td>
+		</tr>
 	</table>
 
 	<a href="board?action=form&boardId=${board.boardId}">수정하기</a>

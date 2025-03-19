@@ -26,7 +26,6 @@
 	<input type="submit" value="등록">
 </form>
 
-<img src="http://localhost:8080/_proj7_file/download.do?filename=1741154483953_몰루겠어요-유해진.jfif">
 
 </body>
 </html>

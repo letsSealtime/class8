@@ -2,7 +2,10 @@ package controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -36,6 +39,7 @@ public class BoardController extends HttpServlet {
 		
 		String action = request.getParameter("action");
 		BoardDAO boardDAO = new BoardDAO();
+		BoardFileDAO boardFileDAO = new BoardFileDAO();
 		
 		// 새글 작성 요청
 		if ("form".equals(action)) {
@@ -69,12 +73,19 @@ public class BoardController extends HttpServlet {
 			CommentDAO commentDAO = new CommentDAO();
 			List resultList = commentDAO.selectComment(boardId);
 			
+			//첨부파일 리스트
+			List<BoardFileDTO> fileList = boardFileDAO.getFileById(boardId);
+			
+			
 			request.setAttribute("board", board);
 			request.setAttribute("resultList", resultList);
+			request.setAttribute("fileList", fileList);
+			
 			
 			request.getRequestDispatcher("/WEB-INF/views/board_detail.jsp").forward(request, response);
-		}
 		
+		
+		}
 		else {
 			// 게시글 목록 가져오기
 			List resultList = boardDAO.selectBoard();
@@ -90,10 +101,18 @@ public class BoardController extends HttpServlet {
 	}
 
 	
+	
+	
+	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html; charset=utf-8");
-
+		
+		BoardDTO boardDTO = new BoardDTO();
+		BoardDAO boardDAO = new BoardDAO();
+		
+		BoardFileDTO boardFileDTO = new BoardFileDTO();
+		BoardFileDAO boardFileDAO = new BoardFileDAO();
 		
 		try {
 			// File : 파일 또는 디렉토리(폴더)를 관리하는 class
@@ -108,105 +127,103 @@ public class BoardController extends HttpServlet {
 			// 업로드 파일의 최대 크기 지정
 			upload.setFileSizeMax(1024 * 1024 * 100); // 100 메가 바이트 100MB
 
-			
 			List<FileItem> items = upload.parseRequest(request);
-		
-for (int i = 0; i < items.size(); i++) {
-				
+			List<FileItem> fileItems = new ArrayList<>();
+			Map<String, String> formData = new HashMap<>();
+			
+			for (int i = 0; i < items.size(); i++) {
 				FileItem fileItem = (FileItem) items.get(i);
-				
+
 				if (fileItem.isFormField()) {
 					
-					
-					
-				}
-				
+					// TRUE : 폼 데이터를 해시맵에 저장
+					formData.put(fileItem.getFieldName(),fileItem.getString());
 
-}
-		
-		
-		} catch (FileUploadException e) {
-			e.printStackTrace();
-		}
-		
-		
-		
-		
-		
-		String command = request.getParameter("command");
-		System.out.println("command : "+ command);
-		if("update".equals(command)) {
-			// update 장소
+				} else {
+
+					// FALSE : 파일 데이터
+					// getSize : 파일 크기
+					if (fileItem.getSize() > 0) {
+						// 파일명 추출
+						String fileName = fileItem.getName();
+						fileName = System.currentTimeMillis() +"_"+ fileName;
+						
+						File uploadFile = new File(currentDirPath + "\\" + fileName);
+						String filePath = currentDirPath + "\\" + fileName;
+						
+						boardFileDTO.setFileName(fileName);
+						boardFileDTO.setFilePath(filePath);
+						
+						// 파일 저장
+						fileItem.write(uploadFile);
+						
+					} 
+				} 
+			} 
 			
-			int boardId = Integer.parseInt(request.getParameter("boardId"));
-			String title = request.getParameter("title");
-			String boardContent = request.getParameter("content");
-			int notice = Integer.parseInt(request.getParameter("notice"));
+			String command = formData.get("command");
+			System.out.println("command : " + command);
 			
-			BoardDTO boardDTO = new BoardDTO();
-			boardDTO.setBoardId(boardId);
-			boardDTO.setTitle(title);
-	        boardDTO.setBoardContent(boardContent);
-	        boardDTO.setNotice(notice);
-			
-			BoardDAO boardDAO = new BoardDAO();
-			int result = boardDAO.updateBoard(boardDTO);
-			System.out.println("result : "+ result);
-			
-			 String url = "board?action=detail&boardId=" + boardId;
-			 response.sendRedirect(url);
-			 
-			 return;
-			
-		} else if ("insert".equals(command)) {
-			// insert 장소
-			// jsp에서 보낸 title을 가져와서, String title 변수에 저장.
-			
-			int empno = Integer.parseInt(request.getParameter("empno"));
-			String title = request.getParameter("title");
-			String boardContent = request.getParameter("content");
-			int notice = Integer.parseInt(request.getParameter("notice"));
-			
-			// 값을 가져온다.
-			// title 저장된 값을, setTitle로 DTO에 저장한다.
-			
-			BoardDTO boardDTO = new BoardDTO();
-	        boardDTO.setEmpno(empno);
-	        boardDTO.setTitle(title);
-	        boardDTO.setBoardContent(boardContent);
-	        boardDTO.setNotice(notice);
-			
-			// DTO 객체에 값을 저장한다.
-	        // insertBoard 메소드에 DTO를 전달한다.
-			
-			BoardDAO boardDAO = new BoardDAO();
-			int result = boardDAO.insertBoard(boardDTO);
-			
-			// 파일 첨부하기
-			// DTO로 boardID 전달
-			
-			if(result > 0) {
+			// form 데이터 저장까지 완료.
+			if ("insert".equals(command)) {
+
+				boardDTO.setEmpno(Integer.parseInt(formData.get("empno")));
+				boardDTO.setTitle(formData.get("title"));
+				boardDTO.setBoardContent(formData.get("content"));
+				boardDTO.setNotice(Integer.parseInt(formData.get("notice")));
 				
-			request.setAttribute("boardId", result);
-		    request.getRequestDispatcher("file?action=upload").forward(request, response);	
+				int boardId = boardDAO.insertBoard(boardDTO);
+				boardFileDTO.setBoardId(boardId);
+				System.out.println("DAO 후 boardId 전송 : " + boardId);
+
+				int result = boardFileDAO.uploadBoardFile(boardFileDTO);
+				System.out.println("게시글 + 첨부 result : " + result);
+
+			} else if ("update".equals(command)) {
+				
+				boardDTO.setBoardId(Integer.parseInt(formData.get("boardId")));
+				int boardId = boardDTO.getBoardId();
+				
+				boardDTO.setTitle(formData.get("title"));
+				boardDTO.setBoardContent(formData.get("content"));
+				boardDTO.setNotice(Integer.parseInt(formData.get("notice")));
+				
+				int result = boardDAO.updateBoard(boardDTO);
+				System.out.println("게시글 update result : "+ result);
+				
+				// 파일 삭제
+				boardFileDAO.deleteFileByBoardId(boardId);
+
+				// 새 파일 업로드
+				boardFileDTO.setBoardId(boardId);
+				boardFileDAO.uploadBoardFile(boardFileDTO);
+				
+				String url = "board?action=detail&boardId=" + boardId;
+				response.sendRedirect(url);
+				
+				return;
+
+			} else if ("delete".equals(command)) {
+				
+				boardDTO.setBoardId(Integer.parseInt(formData.get("boardId")));
+				int boardId = boardDTO.getBoardId();
+				
+				// 파일 유무에 따른 파일 관리 메소드
+				List<BoardFileDTO> fileList = boardFileDAO.getFileById(boardId);
+				
+				if(fileList != null && !fileList.isEmpty()) {
+				boardFileDAO.deleteFileByBoardId(boardId);
+				} 
+				
+				int result = boardDAO.deleteBoard(boardDTO);
+				System.out.println("게시글 delete result : "+ result);
 				
 			}
 			
-			System.out.println("작성된 boardId : "+ result);
-			
-			
-		} else if ("delete".equals(command)) {
-			
-			int boardId = Integer.parseInt(request.getParameter("board_id"));
-			
-			BoardDTO boardDTO = new BoardDTO();
-			boardDTO.setBoardId(boardId);
-			
-			BoardDAO boardDAO = new BoardDAO();
-			int result = boardDAO.deleteBoard(boardDTO);
-			System.out.println("result : "+ result);
-		
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
+		
 		
 		String url = "board";
 		response.sendRedirect(url);
@@ -215,3 +232,84 @@ for (int i = 0; i < items.size(); i++) {
 		
 	}
 
+				
+	
+		
+		
+		
+//		String command = request.getParameter("command");
+//		System.out.println("command : "+ command);
+//		if("update".equals(command)) {
+//			// update 장소
+//			
+//			int boardId = Integer.parseInt(request.getParameter("boardId"));
+//			String title = request.getParameter("title");
+//			String boardContent = request.getParameter("content");
+//			int notice = Integer.parseInt(request.getParameter("notice"));
+//			
+//			BoardDTO boardDTO = new BoardDTO();
+//			boardDTO.setBoardId(boardId);
+//			boardDTO.setTitle(title);
+//	        boardDTO.setBoardContent(boardContent);
+//	        boardDTO.setNotice(notice);
+//			
+//			BoardDAO boardDAO = new BoardDAO();
+//			int result = boardDAO.updateBoard(boardDTO);
+//			System.out.println("result : "+ result);
+//			
+//			 String url = "board?action=detail&boardId=" + boardId;
+//			 response.sendRedirect(url);
+//			 
+//			 return;
+//			
+//		} else if ("insert".equals(command)) {
+//			// insert 장소
+//			// jsp에서 보낸 title을 가져와서, String title 변수에 저장.
+//			
+//			int empno = Integer.parseInt(request.getParameter("empno"));
+//			String title = request.getParameter("title");
+//			String boardContent = request.getParameter("content");
+//			int notice = Integer.parseInt(request.getParameter("notice"));
+//			
+//			// 값을 가져온다.
+//			// title 저장된 값을, setTitle로 DTO에 저장한다.
+//			
+//			BoardDTO boardDTO = new BoardDTO();
+//	        boardDTO.setEmpno(empno);
+//	        boardDTO.setTitle(title);
+//	        boardDTO.setBoardContent(boardContent);
+//	        boardDTO.setNotice(notice);
+//			
+//			// DTO 객체에 값을 저장한다.
+//	        // insertBoard 메소드에 DTO를 전달한다.
+//			
+//			BoardDAO boardDAO = new BoardDAO();
+//			int result = boardDAO.insertBoard(boardDTO);
+//			
+//			// 파일 첨부하기
+//			// DTO로 boardID 전달
+//			
+//			if(result > 0) {
+//				
+//			request.setAttribute("boardId", result);
+//		    request.getRequestDispatcher("file?action=upload").forward(request, response);	
+//				
+//			}
+//			
+//			System.out.println("작성된 boardId : "+ result);
+//			
+//			
+//		} else if ("delete".equals(command)) {
+//			
+//			int boardId = Integer.parseInt(request.getParameter("board_id"));
+//			
+//			BoardDTO boardDTO = new BoardDTO();
+//			boardDTO.setBoardId(boardId);
+//			
+//			BoardDAO boardDAO = new BoardDAO();
+//			int result = boardDAO.deleteBoard(boardDTO);
+//			System.out.println("result : "+ result);
+//		
+//		}
+		
+		

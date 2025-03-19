@@ -1,60 +1,65 @@
-//package controller;
-//
-//import java.io.IOException;
-//import javax.servlet.ServletException;
-//import javax.servlet.annotation.WebServlet;
-//import javax.servlet.http.HttpServlet;
-//import javax.servlet.http.HttpServletRequest;
-//import javax.servlet.http.HttpServletResponse;
-//import javax.servlet.http.Part;
-//
-//import board.BoardDAO;
-//import board.BoardDTO;
-//import boardFile.BoardFileDAO;
-//import boardFile.BoardFileDTO;
-//
-//
-//@WebServlet("/boardFile")
-//public class BoardFileController extends HttpServlet {
-//	private static final long serialVersionUID = 1L;
-//
-//	
-//	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//	}
-//
-//	
-//	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//		request.setCharacterEncoding("utf-8");
-//		response.setContentType("text/html; charset=utf-8");
-//	
-//		// 파일 part 객체로 가져오기 
-//		Part part = request.getPart("fileName");
-//		
-//		// 파일 이름 추출
-//	 	String fileName = getFileName(part);
-//		
-//	 	// 파일 저장 경로
-//	 	String uplodePath = "C:\\GKBMUploadTest\\" + fileName;
-//		
-//	 	// 파일 저장
-//		if (! fileName.isEmpty()) {
-//			part.write(uplodePath);
-//			
-//		}
-//		
-//
-//		// DTO에 정보 저장 (파일 이름, 저장경로)
-//		BoardFileDTO boardFileDTO = new BoardFileDTO();
-//		boardFileDTO.setFileName(fileName);
-//		boardFileDTO.setFilePath(uplodePath);
-//		
-//		// DAO로 보내기
-//		BoardFileDAO boardFileDAO = new BoardFileDAO();
-////		int result = boardFileDAO.insertBoardFile(boardFileDTO);
-//		
-//		System.out.println("result : "+ result);
-//		
-//	}
+package controller;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.List;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
+
+import board.BoardDAO;
+import board.BoardDTO;
+import boardFile.BoardFileDAO;
+import boardFile.BoardFileDTO;
+
+@WebServlet("/file")
+public class BoardFileController extends HttpServlet {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
+			String fileName = request.getParameter("fileName");
+			String path = "C:\\temp\\upload";
+			File file = new File(path + "\\" + fileName);
+
+			// 브라우저 캐시를 사용하지 않도록 설정
+			response.setHeader("Cache-Control", "no-cache");
+			// 지금 응답이 첨부파일이라는 것
+			// 그리고 그 파일 이름이 뭐 라는 것
+			response.addHeader("Content-disposition", "attachment; fileName=" + fileName);
+
+			// 파일 읽기
+			FileInputStream fis = new FileInputStream(file);
+			// 메모리로 퍼 올릴 바가지 크기 설정
+			byte[] buf = new byte[1024 * 1]; // 보통은 8kB
+
+			OutputStream os = response.getOutputStream();
+
+			int count = -1;
+			// 바가지 크기 만큼 읽음
+			// 읽을게 없으면 -1
+			while ((count = fis.read(buf)) != -1) {
+				// 브라우저로 내보냄
+				// 0 : 건너뛰 byte 수
+				// count : 보낼 byte 수
+				os.write(buf, 0, count);
+			}
+			os.flush();
+			os.close();
+			fis.close();
+		}
+	
+	}
+
+
 //
 //	
 //	private String getFileName(Part part) {

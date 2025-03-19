@@ -54,9 +54,9 @@
 
 					<!-- 삭제 버튼 -->
 					<td>
-						<form method="post" action="board">
+						<form method="post" action="board" enctype="multipart/form-data">
 							<input type="hidden" name="command" value="delete"> <input
-								type="hidden" name="board_id" value="${dto.boardId}"> <input
+								type="hidden" name="boardId" value="${dto.boardId}"> <input
 								type="submit" value="삭제"
 								style="border-radius: 4px; background-color: #dc3545; color: white; border: none">
 						</form>

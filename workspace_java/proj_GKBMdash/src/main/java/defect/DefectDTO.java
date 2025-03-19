@@ -7,9 +7,9 @@ public class DefectDTO {
 	Date defectDate;
 	int week;
 	int defectCount;
-	int skuCategory;
 	String defectType;
 	int workOrderId;
+	
 	public Date getDefectDate() {
 		return defectDate;
 	}
@@ -27,12 +27,6 @@ public class DefectDTO {
 	}
 	public void setDefectCount(int defectCount) {
 		this.defectCount = defectCount;
-	}
-	public int getSkuCategory() {
-		return skuCategory;
-	}
-	public void setSkuCategory(int skuCategory) {
-		this.skuCategory = skuCategory;
 	}
 	public String getDefectType() {
 		return defectType;
