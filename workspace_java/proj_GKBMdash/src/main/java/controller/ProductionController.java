@@ -13,7 +13,7 @@ import production.ProductionDAO;
 import production.ProductionDTO;
 
 
-@WebServlet("/production")
+@WebServlet("/productiondash")
 public class ProductionController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -21,16 +21,14 @@ public class ProductionController extends HttpServlet {
 			throws ServletException, IOException {
 		// 주별, 월별, 분기별 선택
 		String unit = request.getParameter("unit"); 
-		ProductionDAO productionDAO = new ProductionDAO();
-		
-		if (unit != null) {
-		List<ProductionDTO> productionList = productionDAO.getProductionByUnit(unit);
-		request.setAttribute("productionList", productionList);
-		
-		} 
-			
-		String url = "/WEB-INF/view/production_dashboard.jsp";
-		request.getRequestDispatcher(url).forward(request, response);
+		if (unit == null) unit = "month";  // 기본값: 월별 조회
+
+        ProductionDAO productionDAO = new ProductionDAO();
+        List<ProductionDTO> productionList = productionDAO.getProductionData(unit);
+
+        request.setAttribute("productionList", productionList);
+        request.setAttribute("unit", unit);
+        request.getRequestDispatcher("/WEB-INF/views/production_dashboard.jsp").forward(request, response);
 		
 		}
 		
