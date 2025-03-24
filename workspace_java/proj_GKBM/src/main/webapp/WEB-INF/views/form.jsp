@@ -7,7 +7,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>게시글 작성</title>
+    <title><c:out value="{{boardDTO != null ? '게시글 수정' : '새 글 작성'}}"/></title>
     <style>
         * {
             margin: 0;
@@ -33,66 +33,90 @@
         .form-group {
             margin-bottom: 15px;
         }
-        label {
-            font-weight: bold;
+        .form-group label {
             display: block;
             margin-bottom: 5px;
+            font-weight: bold;
         }
-        input[type="text"],
-        input[type="file"],
-        textarea {
+        .form-group input,
+        .form-group textarea {
             width: 100%;
             padding: 10px;
             border: 1px solid #ccc;
             border-radius: 4px;
         }
-        .button-group {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 20px;
+        .form-group img {
+            max-width: 200px;
+            display: block;
+            margin-top: 10px;
         }
         button {
-            padding: 10px 15px;
+            padding: 10px 20px;
+            background-color: #007BFF;
             border: none;
-            background: #4a90e2;
             color: white;
             border-radius: 4px;
             cursor: pointer;
         }
-        button:hover {
-            background: #357ab7;
-        }
-        .required {
-            color: red;
-        }
     </style>
 </head>
 <body>
-    <div class="container">
-<h2><c:out value="${boardDTO != null ? '게시글 수정' : '새 글 작성'}"/></h2>
-        <span class="required">* 필수 입력</span>
-        <form action="board" method="post" enctype="multipart/form-data">
-            <input type="hidden" name="command" value="${boardDTO != null ? 'update' : 'insert'}">
-            <c:if test="${boardDTO != null}">
-                <input type="hidden" name="boardId" value="${boardDTO.boardId}">
+
+<div class="container">
+    <h2><c:out value="${boardDTO != null ? '게시글 수정' : '새 글 작성'}"/></h2>
+
+    <form method="post" action="board" enctype="multipart/form-data">
+        <c:if test="${boardDTO != null}">
+            <input type="hidden" name="command" value="update">
+            <input type="hidden" name="boardId" value="${boardDTO.boardId}">
+        </c:if>
+
+        <c:if test="${boardDTO == null}">
+            <input type="hidden" name="command" value="insert">
+        </c:if>
+
+        <div class="form-group">
+            <label>사원번호</label>
+            <input type="text" name="empNo" value="${boardDTO.empNo}" <c:if test="${boardDTO != null}">readonly</c:if>>
+        </div>
+
+        <div class="form-group">
+            <label>이름</label>
+            <input type="text" name="empName" value="${boardDTO.empName}" <c:if test="${boardDTO != null}">readonly</c:if>>
+        </div>
+
+        
+        <div class="form-group">
+            <label>공지사항</label>
+            <select name="notice">
+                <option value="0" ${boardDTO.notice == 0 ? 'selected' : ''}>일반</option>
+                <option value="1" ${boardDTO.notice == 1 ? 'selected' : ''}>공지</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>제목</label>
+            <input type="text" name="title" value="${boardDTO.title}">
+        </div>
+
+        <div class="form-group">
+            <label>내용</label>
+            <textarea name="content" rows="5">${boardDTO.content}</textarea>
+        </div>
+
+        <div class="form-group">
+            <label>첨부 파일</label>
+            <input type="file" name="uploadFile">
+            <c:if test="${boardDTO != null && boardDTO.fileName != null}">
+                <div>
+                    현재 파일: <a href="upload/${boardDTO.fileName}">${boardDTO.fileName}</a>
+                </div>
             </c:if>
-            <div class="form-group">
-                <label for="title">제목<span class="required"> *</span></label>
-                <input type="text" id="title" name="title" value="${boardDTO.title}" placeholder="제목을 입력하세요" required>
-            </div>
-            <div class="form-group">
-                <label for="file">첨부파일</label>
-                <input type="file" id="file" name="files" multiple>
-            </div>
-            <div class="form-group">
-                <label for="content">내용<span class="required"> *</span></label>
-                <textarea id="content" name="content" rows="6" placeholder="내용을 입력하세요" required>${boardDTO.boardContent}</textarea>
-            </div>
-            <div class="button-group">
-                <button type="submit">${boardDTO != null ? '수정하기' : '작성하기'}</button>
-                <button type="button" onclick="window.location.href='board'">목록</button>
-            </div>
-        </form>
-    </div>
+        </div>
+
+        <button type="submit">저장</button>
+    </form>
+</div>
+
 </body>
 </html>
