@@ -1,18 +1,29 @@
 package kr.or.human.dto;
 import java.sql.Date;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
 // DTO : Data Tranfer Object
 // VO : Value Object
 
+
+//@Getter
+//@Setter
+//@ToString
+//@RequiredArgsConstructor // 생성자 (
+//@EqualsAndHashCode // 객체 비교를 위해서...
+
+@Data // 위의 다섯 통합. 
 public class EmpDTO {
 
-	@Override
-	public String toString() {
-		return "EmpDTO [empno=" + empno + ", ename=" + ename + ", job=" + job + ", mgr=" + mgr + ", hiredate="
-				+ hiredate + ", sal=" + sal + ", comm=" + comm + ", deptno=" + deptno + "]";
-	}
-	private int empno;		// 사원번호
-	private String ename;	// 사원명
+	
+	private int empno;		
+	private String ename;	
 	private String job; 
 	private int mgr;
 	private Date hiredate;
@@ -20,54 +31,5 @@ public class EmpDTO {
 	private int comm;
 	private int deptno;
 	
-	
-	public int getEmpno() {
-		return empno;
-	}
-	public void setEmpno(int empno) {
-		this.empno = empno;
-	}
-	public String getEname() {
-		return ename;
-	}
-	public void setEname(String ename) {
-		this.ename = ename;
-	}
-	public String getJob() {
-		return job;
-	}
-	public void setJob(String job) {
-		this.job = job;
-	}
-	public int getMgr() {
-		return mgr;
-	}
-	public void setMgr(int mgr) {
-		this.mgr = mgr;
-	}
-	public Date getHiredate() {
-		return hiredate;
-	}
-	public void setHiredate(Date hiredate) {
-		this.hiredate = hiredate;
-	}
-	public int getSal() {
-		return sal;
-	}
-	public void setSal(int sal) {
-		this.sal = sal;
-	}
-	public int getComm() {
-		return comm;
-	}
-	public void setComm(int comm) {
-		this.comm = comm;
-	}
-	public int getDeptno() {
-		return deptno;
-	}
-	public void setDeptno(int deptno) {
-		this.deptno = deptno;
-	}
 	
 }

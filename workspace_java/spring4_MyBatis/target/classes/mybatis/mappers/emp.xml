@@ -8,5 +8,62 @@
 	select * from emp2
 	</select>
 	
+	
+	<select id="selectOneEmp" resultType="kr.or.human.dto.EmpDTO">
+	select * from emp2
+	where empno = 7788 
+	</select>
+	
+	<select id="selectOneEmpMap" resultType="java.util.HashMap">
+									<!-- hashmap만 적어도 됨 -->
+	select * from emp2
+	where empno = 7788 
+	</select>
+	
+	<select id="selectEmpno" 
+	resultType="empDTO" 
+	parameterType="int"
+	>
+<!-- int = java.lang.Integer -->	
+<!-- resultType = 리턴 타입, parameterType = 인풋 타입 -->
+	select * from emp2
+	where empno = #{parameter}
+	<!-- 물음표 대신 사용하는 것들 -->
+	
+	</select>
+	
+		<select id="selectEmpno" 
+	resultType="empDTO" 
+	parameterType="String"
+	>
+	select * from emp2
+	where ename = #{_parameter}
+	
+	<!-- 
+		#{} : ''를 자동으로 붙여준다.
+		where ename = 'KING'
+		where empno = 123
+		
+		${} : ''를 안 붙임.
+		where ename = KING 
+		eg. 글씨 자체를 보내고 싶을 때 사용한다. 
+		그래서,
+		where ename = '${_parameter}'
+		SQL 인젝션 문제로 $를 잘 사용하지 않음.
+	-->
+	
+	</select>
+	
+
+	<select id="selectEmpno2" 
+	resultType="empDTO" 
+	parameterType="empDTO"
+	>
+	
+	select * from emp2
+	where ename = #{empno}
+	<!-- = #{getterEmpno()} -->
+	
+	</select>
 
 </mapper>

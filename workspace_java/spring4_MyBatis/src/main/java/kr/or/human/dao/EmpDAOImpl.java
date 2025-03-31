@@ -25,4 +25,31 @@ public class EmpDAOImpl implements EmpDAO {
 		return result;
 	}
 
+	@Override
+	public EmpDTO selectOneEmp() {
+		EmpDTO dto = sqlSession.selectOne("mapper.emp.selectOneEmp");
+		
+		// 결과를 딱 하나만 꺼내야할 때, selectOne
+		// 바로 DTO로 반환한다. (myBatis 메소드)
+		
+		System.out.println("dto : " + dto);
+		return dto;
+	}
+	
+	@Override
+	public EmpDTO selectEmpno(int a) {
+		EmpDTO dto = sqlSession.selectOne("mapper.emp.selectEmpno", a);
+		
+		System.out.println("dto : " + dto);
+		return dto;
+	}
+	
+	@Override
+	public EmpDTO selectEmpno2(EmpDTO empDTO) {
+		EmpDTO dto = sqlSession.selectOne("mapper.emp.selectEmpno", empDTO);
+		
+		System.out.println("dto : " + dto);
+		return dto;
+	}
+	
 }

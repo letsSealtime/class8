@@ -21,4 +21,26 @@ public class EmpserviceImpl implements EmpService {
 
 	}
 	
+	public EmpDTO getEmpOne() {
+		EmpDTO dto = empDAO.selectOneEmp();
+
+		return dto;
+
+	}
+	
+	public EmpDTO getEmpno() {
+		EmpDTO dto = empDAO.selectEmpno(7788);
+
+		return dto;
+
+	}
+	
+	
+	public EmpDTO getEmpno2(EmpDTO empDTO) {
+		EmpDTO dto = empDAO.selectEmpno2(empDTO);
+
+		return dto;
+
+	}
+	
 }
