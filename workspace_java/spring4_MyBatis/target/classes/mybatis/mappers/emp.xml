@@ -27,18 +27,12 @@
 <!-- int = java.lang.Integer -->	
 <!-- resultType = 리턴 타입, parameterType = 인풋 타입 -->
 	select * from emp2
-	where empno = #{parameter}
+	where empno = #{_parameter}
 	<!-- 물음표 대신 사용하는 것들 -->
 	
 	</select>
 	
-		<select id="selectEmpno" 
-	resultType="empDTO" 
-	parameterType="String"
-	>
-	select * from emp2
-	where ename = #{_parameter}
-	
+
 	<!-- 
 		#{} : ''를 자동으로 붙여준다.
 		where ename = 'KING'
@@ -52,7 +46,6 @@
 		SQL 인젝션 문제로 $를 잘 사용하지 않음.
 	-->
 	
-	</select>
 	
 
 	<select id="selectEmpno2" 
@@ -61,9 +54,30 @@
 	>
 	
 	select * from emp2
-	where ename = #{empno}
+	where empno = #{empno}
 	<!-- = #{getterEmpno()} -->
 	
+	</select>
+	
+	<update id="modify_Empno" parameterType="empDTO">
+		update emp2
+		set ename = #{ename},
+			sal = #{sal},
+			comm = #{comm},
+			hiredate = #{hiredate}
+		where empno = #{empno}
+	</update>
+	
+	<select id="delete_Empno" parameterType="empDTO">
+		delete
+		from emp2
+		where empno = #{empno} 
+	</select>
+	
+	<select id="insert_Empno" parameterType="empDTO">
+		insert
+		into emp2( empno, ename, job, mgr, hiredate, sal, comm, deptno)
+		values( #{empno}, #{ename}, #{job}, #{mgr}, #{hiredate}, #{sal}, #{comm}, #{deptno}  )
 	</select>
 
 </mapper>

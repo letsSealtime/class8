@@ -8,6 +8,9 @@ public interface EmpDAO {
 
 	List<EmpDTO> selectEmpList();
 	public EmpDTO selectOneEmp();
-	public EmpDTO selectEmpno(int a);
-	public EmpDTO selectEmpno2(EmpDTO empDTO);
+	public EmpDTO selectOneEmpno(int empno);
+	public EmpDTO selectOneEmpno2(EmpDTO empDTO);
+	int updateEmp(EmpDTO empDTO);
+	int insertEmp(EmpDTO empDTO);
+	int deleteEmp(EmpDTO empDTO);
 }

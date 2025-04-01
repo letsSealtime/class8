@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import kr.or.human.dto.EmpDTO;
@@ -17,26 +18,19 @@ import kr.or.human.service.EmpService;
 public class EmpController {
 
 	
-	@RequestMapping(value = "/emp", method=RequestMethod.GET)
-	public String listEmp() {
+	@RequestMapping(value="/emp", method=RequestMethod.GET)
+	public String listEmp(Model model) {
 		
-		return "emp";
+		List<EmpDTO> list = empService.getEmpList();
+		System.out.println("list.size : "+ list.size());
 		
+		model.addAttribute("list", list);
+		
+		return "empList";
 	}
 	
 	@Autowired
 	EmpService empService;
-	
-	@RequestMapping("/emplist")
-	public ModelAndView empList() {
-
-		ModelAndView mav = new ModelAndView("empList");
-		List list = empService.getEmpList();
-		
-		mav.addObject("list", list);
-		
-		return mav;
-	}
 	
 	
 	@RequestMapping("/empOne")
@@ -50,47 +44,88 @@ public class EmpController {
 		return mav;
 	}
 	
-	@RequestMapping("/empno")
-	public ModelAndView empno() {
-
-		ModelAndView mav = new ModelAndView("empno");
-		EmpDTO dto = empService.getEmpOne();
-		
-		mav.addObject("dto", dto);
-		
-		return mav;
-	}
-	
-	@RequestMapping("/emplist2")
-	public ModelAndView empList2() {
-
-		ModelAndView mav = new ModelAndView("empList2");
-		List list = empService.getEmpList();
-		
-		mav.addObject("list", list);
-		
-		return mav;
+	@RequestMapping(value="/empno", method=RequestMethod.GET)
+	public String empno(
+			@RequestParam("empno")
+			int empno
+	) {
+		EmpDTO dto = empService.getEmpno(empno);
+		System.out.println("conroller dto : "+ dto);
+		return "emp";
 	}
 	
 	
-	@RequestMapping("/empno2")
-	public ModelAndView empno2(
+	@RequestMapping(value="/detailEmp", method=RequestMethod.GET)
+	public String empno2(
 			@ModelAttribute
 			EmpDTO empDTO,
+			
 			Model model
 			) {
-
-		ModelAndView mav = new ModelAndView("empno2");
 		EmpDTO dto = empService.getEmpno2(empDTO);
-		
-		mav.addObject("dto", dto);
-		
-		return mav;
+		System.out.println("controller empno2 : "+ dto);
+		model.addAttribute("dto", dto);
+		return "detailEmp";
 	}
 	
-//	@RequestMapping(value = "/emp", method=RequestMethod.PUT)
-//	public String modifyEmp(Model model) {
-//		// 실제로 update 실행하는 곳
-//	}
+	@RequestMapping(value="/modifyEmp", method=RequestMethod.GET)
+	public String modifyEmp(
+			@ModelAttribute
+			EmpDTO empDTO,
+			
+			Model model
+			) {
+		EmpDTO dto = empService.getEmpno2(empDTO);
+		model.addAttribute("dto", dto);
+		return "modifyEmp";
+	}
+	
+	@RequestMapping(value="/emp", method=RequestMethod.POST)
+	public String modifyEmp2(Model model,
+			@ModelAttribute EmpDTO empDTO
+	) {
+		System.out.println(empDTO);
+		int countUpdate = empService.modifyEmp(empDTO);
+		System.out.println("업뎃! : "+ countUpdate);
+		
+		return "redirect:emp";
+	}
+	
+	// value = spring이 연결하는 메소드 이름 (PK),
+	// 메소드 = POST로 연결한다. (다 받아주고 싶으면 지움)
+	// redirect : 새로고침 
+	// Model = request 주머니 ( 아무거나 설정할 수 있다.) 
+	// @modelAtrribute = setter 
+
+	
+	// 삽입
+	
+	@RequestMapping(value="/insertEmp", method=RequestMethod.GET)
+	public String insertEmp2(
+			@ModelAttribute
+			EmpDTO empDTO
+			) {
+		return "insertEmp";
+	}
+	
+	@RequestMapping(value="/insertEmp2", method=RequestMethod.POST)
+	public String insertEmp(
+			@ModelAttribute
+			EmpDTO empDTO
+			) {
+		int CountUpdate = empService.insertEmp(empDTO);
+		System.out.println("등록 결과 : " + CountUpdate);
+		return "redirect:emp";
+	}
+	
+	@RequestMapping(value="/deleteEmp", method=RequestMethod.GET)
+	public String deleteEmp(
+			@ModelAttribute
+			EmpDTO empDTO
+			) {
+		int CountUpdate = empService.deleteEmp(empDTO);
+		System.out.println("삭제 결과" + CountUpdate);
+		return "redirect:emp";
+	}	
 	
 }

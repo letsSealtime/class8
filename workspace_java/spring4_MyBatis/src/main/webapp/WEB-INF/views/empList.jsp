@@ -11,19 +11,31 @@
 </head>
 <body>
 
-직원 리스트
-<c:forEach items="${list}" var="emp">
-<ul>
-<li>ENAME : ${emp.ename}</li>
-<li>EMPNO : ${emp.empno}</li>
-<li>JOB : ${emp.job}</li>
-<li>MGR : ${emp.mgr}</li>
-<li>HIREDATE : ${emp.hiredate}</li>
-<li>SAL : ${emp.sal}</li>
-<li>COMM : ${emp.comm}</li>
-<li>DEPTNO : ${emp.deptno}</li>
-</ul>
-</c:forEach>
+<table border="1">
+	<thead>
+        <tr>
+            <th>empno</th>
+            <th>ename</th>
+        </tr>
+    </thead>
+    <tbody>
+    	<c:if test="${ not empty list }">
+	        <c:forEach var="dto" items="${list}" varStatus="loop">
+	            <tr>
+	                <td>${dto.empno}</td>
+	                <td><a href="detailEmp?empno=${dto.empno}">${dto.ename}</a></td>
+	            </tr>
+	        </c:forEach>
+    	</c:if>
+    	<c:if test="${ empty list }">
+    		<tr>
+    			<td colspan=2>조회 내용이 없습니다</td>
+    		</tr>
+    	</c:if>
+    
+    </tbody>
+</table>
+<button><a href="insertEmp">입력</a></button>
 
 </body>
 </html>

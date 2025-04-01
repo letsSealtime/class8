@@ -37,19 +37,50 @@ public class EmpDAOImpl implements EmpDAO {
 	}
 	
 	@Override
-	public EmpDTO selectEmpno(int a) {
-		EmpDTO dto = sqlSession.selectOne("mapper.emp.selectEmpno", a);
-		
-		System.out.println("dto : " + dto);
+	public EmpDTO selectOneEmpno(int empno) {
+		EmpDTO dto = sqlSession.selectOne("mapper.emp.selectEmpno", empno);
+		System.out.println("dto: "+ dto);
+		return dto;
+	}
+	@Override
+	public EmpDTO selectOneEmpno2(EmpDTO empDTO) {
+		EmpDTO dto = sqlSession.selectOne("mapper.emp.selectEmpno2", empDTO);
+		System.out.println("EmpDAOImpl selectOneEmpno2: "+ dto);
 		return dto;
 	}
 	
-	@Override
-	public EmpDTO selectEmpno2(EmpDTO empDTO) {
-		EmpDTO dto = sqlSession.selectOne("mapper.emp.selectEmpno", empDTO);
-		
-		System.out.println("dto : " + dto);
-		return dto;
+	public int updateEmp(EmpDTO empDTO) {
+		int countUpdate = -1;
+		try {
+			countUpdate = sqlSession.update("mapper.emp.modify_Empno", empDTO);
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return countUpdate;
 	}
+	
+	public int insertEmp(EmpDTO empDTO) {
+		int countUpdate = -1;
+		try {
+			countUpdate = sqlSession.insert("mapper.emp.insert_Empno", empDTO);
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return countUpdate;
+	}
+	
+	public int deleteEmp(EmpDTO empDTO) {
+		int countUpdate = -1;
+		try {
+			countUpdate = sqlSession.delete("mapper.emp.delete_Empno", empDTO);
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return countUpdate;
+	}
+	
 	
 }
