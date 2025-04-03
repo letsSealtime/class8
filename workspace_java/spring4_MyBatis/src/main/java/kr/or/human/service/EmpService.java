@@ -15,5 +15,8 @@ public interface EmpService {
 	public int insertEmp(EmpDTO empDTO);
 	public int deleteEmp(EmpDTO empDTO);
 	
-
+	public int joinEmp(EmpDTO empDTO);
+	public int retireEmp(EmpDTO empDTO);
+	public List<EmpDTO> getEmpSearchList(EmpDTO empDTO);
+	
 }

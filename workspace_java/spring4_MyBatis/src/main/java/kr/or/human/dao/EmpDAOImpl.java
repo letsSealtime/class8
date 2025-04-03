@@ -83,4 +83,23 @@ public class EmpDAOImpl implements EmpDAO {
 	}
 	
 	
+	void getSeq() {
+		int seq = sqlSession.selectOne("mapper.emp.getSeq");
+		
+		EmpDTO dto = new EmpDTO();
+		dto.setEmpno(seq);
+		dto.setEname("임의");
+		// insert에 보내서 테이블 a에서 seq 사용
+		// insert에 보내서 테이블 b에서 seq 사용
+		
+	}
+
+	
+	@Override
+	public List<EmpDTO> selectEmpSearchList(EmpDTO dto) {
+		List<EmpDTO> result = sqlSession.selectList("mapper.emp.dynamic.selectEmp", dto);
+		System.out.println("result : "+ result);
+		return result;
+	}
+	
 }

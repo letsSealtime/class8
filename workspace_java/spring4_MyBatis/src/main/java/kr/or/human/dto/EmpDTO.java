@@ -1,5 +1,6 @@
 package kr.or.human.dto;
 import java.sql.Date;
+import java.util.List;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -31,5 +32,8 @@ public class EmpDTO {
 	private int comm;
 	private int deptno;
 	
+	private String type;
+	private String keyword;
+	private List empnos;
 	
 }
