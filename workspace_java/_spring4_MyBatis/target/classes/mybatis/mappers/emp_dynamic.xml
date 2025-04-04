@@ -44,15 +44,20 @@
 	
 	<select id="foreach" resultType="empDTO" parameterType="empDTO">
 		select * from emp2
-		<!--  where empno in (7566, 7698)  -->
-		
-		<where> <!-- item 은 속성명 -->
-			<foreach item="item" collection="empnos"
-					open="empno in (" separator="," close=")">
-					${item}		
+<!-- 		where empno in (7566,7698) -->
+		<where>
+<!-- 			<foreach item="item" collection="empnos"  -->
+<!-- 					open="empno in (" separator="," close=")"> -->
+<!-- 				#{item} -->
+<!-- 			</foreach> -->
+
+			empno in 
+			<foreach item="item" collection="empnos" 
+					open="(" separator="," close=")">
+				#{item}
 			</foreach>
+
 		</where>
-		
 	</select>
 	
 

@@ -26,7 +26,6 @@
 	<context:component-scan base-package="kr.or.human" />
 	
 	<!-- @Mapper 설정 -->
-	 <mybatis-spring:scan base-package="kr.or.human.dao.mapper" />
-	
+	<mybatis-spring:scan base-package="kr.or.human.dao.mapper" />
 	
 </beans:beans>

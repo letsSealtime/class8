@@ -2,98 +2,12 @@
 <!DOCTYPE mapper
 	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="mapper.emp">
+<mapper namespace="kr.or.human.dao.mapper.EmpMapperDAO">
 
-	<select id="selectEmp" resultType="kr.or.human.dto.EmpDTO">
+	<select id="selectEmp" resultType="empDTO">
 		select * from emp2
 	</select>
-	
-	<select id="selectOneEmp" resultType="kr.or.human.dto.EmpDTO">
-		select * from emp2 
-		where empno = 77888
-	</select>
-<!-- 	<select id="selectOneEmpMap" resultType="java.util.HashMap"> -->
-	<select id="selectOneEmpMap" resultType="hashmap">
-		select * from emp2 
-		where empno = 7788
-	</select>
-	
-<!-- 		parameterType="java.lang.Integer"> -->
-	<select id="selectEmpno" 
-		resultType="empDTO"
-		parameterType="int">
-		
-		select * from emp2 
-		where empno = #{_parameter}
-		
-	</select>
-	
-	<select id="selectEmpno0" 
-		resultType="empDTO"
-		parameterType="string">
-		
-		select * from emp2 
-		where ename = #{_parameter}
-		<!-- 
-			#{} : ''를 자동으로 붙여줌
-			where ename = 'KING'
-			where empno = 123
-			
-			${} : ''를 안붙임
-			where ename = KING
-			그래서
-			where ename = '${_parameter}'
-		 -->
-	</select>
 
-	<select id="selectEmpno2" 
-		resultType="empDTO"
-		parameterType="empDTO">
-		
-		select * from emp2 
-		where empno = #{empno}
-		
-	</select>
-	
-	<update id="udpateEmp" parameterType="empDTO">
-		update emp2
-		   set ename = #{ename},
-		       sal = #{sal},
-		       comm = #{comm},
-		       hiredate = #{hiredate}
-		 where empno = #{empno}
-	</update>
-	
-	<insert id="insertEmp" parameterType="empDTO">
-		insert into emp2 (empno, ename, sal, comm, mgr, hiredate)
-		values ( seq_emp2.nextval, #{ename}, #{sal}, #{comm}, #{mgr}, #{hiredate} )
-	</insert>
-	
-	<delete id="deleteEmp" parameterType="empDTO">
-		delete emp2
-		where empno = #{empno}
-	</delete>
-	
-	<select id="getSeq" resultType="int">
-		select seq_emp2.nextval from dual
-	</select>
-	
-	
-	<insert id="insertEmp2" parameterType="empDTO">
-	
-		<selectKey keyProperty="empno" resultType="int" order="BEFORE">
-			select seq_emp2.nextval from dual
-		</selectKey>
-
-		insert into emp2 (empno, ename, sal, comm, mgr, hiredate)
-		values ( #{empno}, #{ename}, #{sal}, #{comm}, #{mgr}, #{hiredate} )
-	</insert>
-	
-	<select id="search" resultType="empDTO" parameterType="empDTO">
-		select * from emp2
-		where upper(ename) like upper('%' || #{ename} || '%')
-	</select>
-	
 </mapper>
 
 
