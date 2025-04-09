@@ -95,3 +95,6 @@ public class CheckFilter implements Filter {
 	}
 	
 }
+
+// 대댓글 형태, 페이징 적용, emp 목록 표시, 검색 곁들이고,
+// 정렬, 이름순 이름역순, 고용일순, 연봉순 
